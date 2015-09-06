@@ -9,7 +9,6 @@ import java.util.LinkedList;
 
 public class Controller implements IController {
 
-
     private UncertaintyCalculator mc;
 
     public Controller() {
@@ -20,8 +19,7 @@ public class Controller implements IController {
     public double meanAmplitude(LinkedList<Double> data) {
         if (data.size() > 0) {
             return mc.mean(data);
-        }
-        else {
+        } else {
             return 0;
         }
     }
@@ -46,14 +44,12 @@ public class Controller implements IController {
         double mean = meanAmplitude(data);
         double stDev = stDevByConstant(mean);
         double repLim = repeatabilityLimit(stDev);
-        return new TableResultsContainer(mean,stDev,repLim);
+        return new TableResultsContainer(mean, stDev, repLim);
     }
 
     public TableSingleMeasurementsResultContainer getResultForSingleMeasuredData(LinkedList<Double> data) {
         double stDev = stDev(data);
         double repLim = repeatabilityLimit(stDev);
-        return new TableSingleMeasurementsResultContainer(stDev,repLim);
+        return new TableSingleMeasurementsResultContainer(stDev, repLim);
     }
-
-
 }

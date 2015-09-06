@@ -31,9 +31,9 @@ public class ViewUtils {
     public LinkedList<Double> getDataFromTable(DefaultTableModel model, int col) {
 
         LinkedList<Double> amplitudes = new LinkedList<Double>();
-        for (int i = 0; i < model.getRowCount() ; i++) {
-            if (model.getValueAt(i,col) != null) {
-                String curr = (String)model.getValueAt(i,col);
+        for (int i = 0; i < model.getRowCount(); i++) {
+            if (model.getValueAt(i, col) != null) {
+                String curr = (String) model.getValueAt(i, col);
                 if (!curr.equals("")) {
                     Matcher cellText = cellTextPattern.matcher(curr);
                     if (cellText.find()) {
@@ -53,10 +53,10 @@ public class ViewUtils {
         String w1String;
         String w2String;
 
-        for (int i = 0; i < model.getRowCount() ; i++) {
-            if (model.getValueAt(i,1) != null & model.getValueAt(i,2) != null) {
-                w1String = (String) model.getValueAt(i,1);
-                w2String = (String) model.getValueAt(i,2);
+        for (int i = 0; i < model.getRowCount(); i++) {
+            if (model.getValueAt(i, 1) != null & model.getValueAt(i, 2) != null) {
+                w1String = (String) model.getValueAt(i, 1);
+                w2String = (String) model.getValueAt(i, 2);
                 Matcher matchW1 = cellTextPattern.matcher(w1String);
                 Matcher matchW2 = cellTextPattern.matcher(w2String);
                 if (matchW1.find() & matchW2.find()) {
@@ -64,9 +64,8 @@ public class ViewUtils {
                     w2String = w2String.replace(',', '.');
                     w1 = Double.parseDouble(w1String);
                     w2 = Double.parseDouble(w2String);
-                    model.setValueAt(df.format(controller.amplitude(w1, w2)),i,3);
-                }
-                else {
+                    model.setValueAt(df.format(controller.amplitude(w1, w2)), i, 3);
+                } else {
                     model.setValueAt(null, i, 3);
                 }
             }

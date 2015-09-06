@@ -60,7 +60,7 @@ public class MainWindow extends JFrame {
     private IController controller;
     private ViewUtils viewUtils;
 
-    public MainWindow(IController c)  {
+    public MainWindow(IController c) {
         super("Оцінювання невизначеності для методики");
         controller = c;
         viewUtils = new ViewUtils(controller);
@@ -69,7 +69,7 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         String[] columnNames = {"№", "W1, %", "W2, %", "R, %"};
-        String[] columnNamesSingle = {"№","5-10", "10-20", "20-40", ">40"};
+        String[] columnNamesSingle = {"№", "5-10", "10-20", "20-40", ">40"};
 
         df = new DecimalFormat("0.00");
         DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
@@ -83,7 +83,7 @@ public class MainWindow extends JFrame {
         final CellEditionTableModel tableModel10_20 = new CellEditionTableModel(rows, cols);
         final CellEditionTableModel tableModel20_40 = new CellEditionTableModel(rows, cols);
         final CellEditionTableModel tableModel40_ = new CellEditionTableModel(rows, cols);
-        final CellEditionTableModel tableModelSingleMeasurements = new CellEditionTableModel(rows,5);
+        final CellEditionTableModel tableModelSingleMeasurements = new CellEditionTableModel(rows, 5);
 
         modelConfigure(tableModel5_10, columnNames);
         modelConfigure(tableModel10_20, columnNames);
@@ -185,14 +185,11 @@ public class MainWindow extends JFrame {
         });
 
 
-
-
-
         setVisible(true);
         pack();
     }
 
-    private void modelConfigure( CellEditionTableModel model, String[] columnNames) {
+    private void modelConfigure(CellEditionTableModel model, String[] columnNames) {
         model.setColumnIdentifiers(columnNames);
         for (int i = 0; i < 20; i++) {
             model.setValueAt(String.valueOf(i + 1), i, 0);
@@ -204,7 +201,7 @@ public class MainWindow extends JFrame {
 
     }
 
-    private void modelSingleMeasurementConfigure( CellEditionTableModel model, String[] columnNames) {
+    private void modelSingleMeasurementConfigure(CellEditionTableModel model, String[] columnNames) {
         model.setColumnIdentifiers(columnNames);
         for (int i = 0; i < 20; i++) {
             model.setValueAt(String.valueOf(i + 1), i, 0);
@@ -216,7 +213,6 @@ public class MainWindow extends JFrame {
         }
 
     }
-
 
 
     private void tableConfigure(JTable table, CellEditionTableModel model) {

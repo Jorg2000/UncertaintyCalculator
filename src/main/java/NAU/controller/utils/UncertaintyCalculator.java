@@ -10,6 +10,7 @@ import java.util.List;
 
 public class UncertaintyCalculator {
     private MathContext mathContext;
+
     public UncertaintyCalculator() {
         mathContext = new MathContext(4, RoundingMode.HALF_UP);
     }
@@ -22,7 +23,7 @@ public class UncertaintyCalculator {
 
         BigDecimal sum = new BigDecimal(0);
         for (Double a : arr) {
-           sum = sum.add(new BigDecimal(a));
+            sum = sum.add(new BigDecimal(a));
         }
 
         return sum.divide(new BigDecimal(arr.size()), mathContext).doubleValue();
@@ -48,8 +49,7 @@ public class UncertaintyCalculator {
             }
             BigDecimal underRoot = sum.divide(new BigDecimal(arr.size()).subtract(new BigDecimal(1)), mathContext);
             return Math.sqrt(underRoot.round(mathContext).doubleValue());
-        }
-        else {
+        } else {
             return 0;
         }
     }
@@ -57,6 +57,4 @@ public class UncertaintyCalculator {
     public double repeatabilityLimit(double stanDev) {
         return 2.77 * stanDev;
     }
-
-
 }

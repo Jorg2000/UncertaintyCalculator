@@ -1,23 +1,15 @@
 package NAU.model.POJO;
 
-public class TableResultsContainer {
-
-    double ampMean;
+/**
+ * Created by root on 06.09.2015.
+ */
+public class TableSingleMeasurementsResultContainer {
     double stDev;
     double repLim;
 
-    public TableResultsContainer(double ampMean, double stDev, double repLim) {
-        this.ampMean = ampMean;
+    public TableSingleMeasurementsResultContainer(double stDev, double repLim) {
         this.stDev = stDev;
         this.repLim = repLim;
-    }
-
-    public double getAmpMean() {
-        return ampMean;
-    }
-
-    public void setAmpMean(double ampMean) {
-        this.ampMean = ampMean;
     }
 
     public double getStDev() {

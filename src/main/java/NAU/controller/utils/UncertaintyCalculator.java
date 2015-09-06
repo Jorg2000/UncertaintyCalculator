@@ -2,6 +2,7 @@ package NAU.controller.utils;
 
 import java.math.BigDecimal;
 
+
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.List;
@@ -19,7 +20,7 @@ public class UncertaintyCalculator {
         return Math.abs(w1 - w2);
     }
 
-    public double meanAmplitude(List<Double> arr) {
+    public double mean(List<Double> arr) {
 
         BigDecimal sum = new BigDecimal(0);
         for (Double a : arr) {
@@ -29,10 +30,30 @@ public class UncertaintyCalculator {
         return sum.divide(new BigDecimal(arr.size()), mathContext).doubleValue();
     }
 
-    public double stanDev(double mean) {
+    public double stanDevByConst(double mean) {
 
         return mean * 0.886;
 
+    }
+
+    public double stanDev(List<Double> arr) {
+        if (arr.size() > 1) {
+
+            BigDecimal mean = new BigDecimal(mean(arr));
+
+            BigDecimal sum = new BigDecimal(0);
+            for (Double a : arr) {
+                BigDecimal ai = new BigDecimal(a);
+                BigDecimal curSub = mean.subtract(ai);
+                BigDecimal curPower = curSub.pow(2);
+                sum = sum.add(curPower);
+            }
+            BigDecimal underRoot = sum.divide(new BigDecimal(arr.size()).subtract(new BigDecimal(1)), mathContext);
+            return Math.sqrt(underRoot.round(mathContext).doubleValue());
+        }
+        else {
+            return 0;
+        }
     }
 
     public double repeatabilityLimit(double stanDev) {

@@ -18,7 +18,6 @@ import static org.junit.Assert.*;
  */
 public class ViewUtilsTest {
 
-
     int rows = 20;
     int cols = 4;
     private CellEditionTableModel testTableModel;
@@ -131,7 +130,7 @@ public class ViewUtilsTest {
         testTableModel.setValueAt("2,2", 1, 3);
         testTableModel.setValueAt("3,3", 2, 3);
 
-        LinkedList<Double> actual = viewUtils.getDataFromTable(testTableModel);
+        LinkedList<Double> actual = viewUtils.getDataFromTable(testTableModel, 3);
         assertEquals(expected,actual);
 
     }
@@ -146,7 +145,7 @@ public class ViewUtilsTest {
         testTableModel.setValueAt("1,1", 0, 3);
         testTableModel.setValueAt("", 1, 3);
         testTableModel.setValueAt("3,3", 2, 3);
-        LinkedList<Double> actual  = viewUtils.getDataFromTable(testTableModel);
+        LinkedList<Double> actual  = viewUtils.getDataFromTable(testTableModel, 3);
 
         assertEquals(expected,actual);
     }
@@ -160,7 +159,7 @@ public class ViewUtilsTest {
         testTableModel.setValueAt("1,1", 0, 3);
         testTableModel.setValueAt("3.3", 1, 3);
         testTableModel.setValueAt(null, 2, 3);
-        LinkedList<Double> actual = viewUtils.getDataFromTable(testTableModel);
+        LinkedList<Double> actual = viewUtils.getDataFromTable(testTableModel, 3);
         assertEquals(expected,actual);
     }
 
@@ -169,7 +168,7 @@ public class ViewUtilsTest {
         Controller controller = new Controller();
         ViewUtils viewUtils = new ViewUtils(controller);
         LinkedList<Double> expected = new LinkedList<Double>();
-        LinkedList<Double> actual = viewUtils.getDataFromTable(testTableModel);
+        LinkedList<Double> actual = viewUtils.getDataFromTable(testTableModel, 3);
         assertEquals(expected,actual);
     }
 

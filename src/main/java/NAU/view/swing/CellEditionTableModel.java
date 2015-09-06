@@ -2,9 +2,6 @@ package NAU.view.swing;
 
 import javax.swing.table.DefaultTableModel;
 
-/**
- * Created by root on 05.09.2015.
- */
 public class CellEditionTableModel extends DefaultTableModel {
     private boolean[][] editable_cells; // 2d array to represent rows and columns
 

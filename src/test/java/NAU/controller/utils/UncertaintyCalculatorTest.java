@@ -9,24 +9,13 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.LinkedList;
 
-/**
- * Created by root on 06.09.2015.
- */
-
-
-
-
-    /**
-     * Created by root on 05.09.2015.
-     */
-    public  class UncertaintyCalculatorTest extends Assert {
+public  class UncertaintyCalculatorTest extends Assert {
 
         private LinkedList<Double> data;
         private DecimalFormat df;
-        private DecimalFormatSymbols decimalFormatSymbols;
 
 
-        @Before
+    @Before
         public  void setUpData() {
             data = new LinkedList<Double>();
             data.add(0.58);data.add(5.09);data.add(0.83);data.add(1.16);data.add(3.63);
@@ -34,7 +23,7 @@ import java.util.LinkedList;
             data.add(1.91);data.add(0.25);data.add(6.84);data.add(0.55);data.add(4.95);
             data.add(0.74);data.add(3.96);data.add(1.89);data.add(1.92);data.add(6.25);
             df = new DecimalFormat("0.00");
-            decimalFormatSymbols = new DecimalFormatSymbols();
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
             decimalFormatSymbols.setDecimalSeparator('.');
             df.setRoundingMode(RoundingMode.HALF_UP);
             df.setDecimalFormatSymbols(decimalFormatSymbols);

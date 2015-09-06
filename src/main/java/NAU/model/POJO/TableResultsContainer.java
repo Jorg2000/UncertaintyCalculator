@@ -2,9 +2,9 @@ package NAU.model.POJO;
 
 public class TableResultsContainer {
 
-    double ampMean;
-    double stDev;
-    double repLim;
+    private double ampMean;
+    private double stDev;
+    private double repLim;
 
     public TableResultsContainer(double ampMean, double stDev, double repLim) {
         this.ampMean = ampMean;

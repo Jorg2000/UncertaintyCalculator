@@ -10,13 +10,10 @@ import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by root on 06.09.2015.
- */
+
 public class ViewUtils {
 
     private final DecimalFormat df;
-    private final DecimalFormatSymbols decimalFormatSymbols;
     private IController controller;
 
     private Pattern cellTextPattern;
@@ -24,7 +21,7 @@ public class ViewUtils {
     public ViewUtils(IController c) {
         controller = c;
         df = new DecimalFormat("0.00");
-        decimalFormatSymbols = new DecimalFormatSymbols();
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
         decimalFormatSymbols.setDecimalSeparator(',');
         df.setRoundingMode(RoundingMode.HALF_UP);
         df.setDecimalFormatSymbols(decimalFormatSymbols);
@@ -55,7 +52,6 @@ public class ViewUtils {
         double w2;
         String w1String;
         String w2String;
-
 
         for (int i = 0; i < model.getRowCount() ; i++) {
             if (model.getValueAt(i,1) != null & model.getValueAt(i,2) != null) {

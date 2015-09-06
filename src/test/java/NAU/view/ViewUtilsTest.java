@@ -1,7 +1,6 @@
 package NAU.view;
 
 import NAU.controller.Controller;
-import NAU.model.POJO.TableResultsContainer;
 import NAU.view.swing.CellEditionTableModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,24 +12,21 @@ import java.util.LinkedList;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by root on 06.09.2015.
- */
+
 public class ViewUtilsTest {
 
-    int rows = 20;
-    int cols = 4;
     private CellEditionTableModel testTableModel;
-    private DecimalFormat df;
-    private DecimalFormatSymbols decimalFormatSymbols;
+
     @Before
     public void setUp() throws Exception {
-        df = new DecimalFormat("0,00");
-        decimalFormatSymbols = new DecimalFormatSymbols();
+        DecimalFormat df = new DecimalFormat("0,00");
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
         decimalFormatSymbols.setDecimalSeparator('.');
         df.setRoundingMode(RoundingMode.HALF_UP);
         df.setDecimalFormatSymbols(decimalFormatSymbols);
-        testTableModel = new CellEditionTableModel(rows,cols);
+        int rows = 20;
+        int cols = 4;
+        testTableModel = new CellEditionTableModel(rows, cols);
     }
 
     @Test

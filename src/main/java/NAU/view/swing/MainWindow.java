@@ -14,9 +14,6 @@ import java.text.DecimalFormatSymbols;
 import java.util.LinkedList;
 
 
-/**
- * Created by root on 05.09.2015.
- */
 public class MainWindow extends JFrame {
     private JTable table5_10;
 
@@ -58,14 +55,10 @@ public class MainWindow extends JFrame {
     private JButton надрукуватиПротколButton;
     private JTextField textField7;
 
-    private int rows;
-    private int cols;
+    private DecimalFormat df;
 
-    DecimalFormat df;
-    DecimalFormatSymbols decimalFormatSymbols;
-
-    IController controller;
-    ViewUtils viewUtils;
+    private IController controller;
+    private ViewUtils viewUtils;
 
     public MainWindow(IController c)  {
         super("Оцінювання невизначеності для методики");
@@ -79,17 +72,17 @@ public class MainWindow extends JFrame {
         String[] columnNamesSingle = {"№","5-10", "10-20", "20-40", ">40"};
 
         df = new DecimalFormat("0.00");
-        decimalFormatSymbols = new DecimalFormatSymbols();
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
         decimalFormatSymbols.setDecimalSeparator('.');
         df.setRoundingMode(RoundingMode.HALF_UP);
         df.setDecimalFormatSymbols(decimalFormatSymbols);
 
-        rows = 20;
-        cols = 4;
-        final CellEditionTableModel tableModel5_10 = new CellEditionTableModel(rows,cols);
-        final CellEditionTableModel tableModel10_20 = new CellEditionTableModel(rows,cols);
-        final CellEditionTableModel tableModel20_40 = new CellEditionTableModel(rows,cols);
-        final CellEditionTableModel tableModel40_ = new CellEditionTableModel(rows,cols);
+        int rows = 20;
+        int cols = 4;
+        final CellEditionTableModel tableModel5_10 = new CellEditionTableModel(rows, cols);
+        final CellEditionTableModel tableModel10_20 = new CellEditionTableModel(rows, cols);
+        final CellEditionTableModel tableModel20_40 = new CellEditionTableModel(rows, cols);
+        final CellEditionTableModel tableModel40_ = new CellEditionTableModel(rows, cols);
         final CellEditionTableModel tableModelSingleMeasurements = new CellEditionTableModel(rows,5);
 
         modelConfigure(tableModel5_10, columnNames);

@@ -7,11 +7,9 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.List;
 
-/**
- * Created by root on 05.09.2015.
- */
+
 public class UncertaintyCalculator {
-    MathContext mathContext;
+    private MathContext mathContext;
     public UncertaintyCalculator() {
         mathContext = new MathContext(4, RoundingMode.HALF_UP);
     }

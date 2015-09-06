@@ -1,11 +1,9 @@
 package NAU.model.POJO;
 
-/**
- * Created by root on 06.09.2015.
- */
+
 public class TableSingleMeasurementsResultContainer {
-    double stDev;
-    double repLim;
+    private double stDev;
+    private double repLim;
 
     public TableSingleMeasurementsResultContainer(double stDev, double repLim) {
         this.stDev = stDev;

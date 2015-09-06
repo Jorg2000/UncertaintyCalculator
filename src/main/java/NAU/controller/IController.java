@@ -6,9 +6,7 @@ import NAU.model.POJO.TableSingleMeasurementsResultContainer;
 
 import java.util.LinkedList;
 
-/**
- * Created by root on 06.09.2015.
- */
+
 public interface IController {
 
     double meanAmplitude(LinkedList<Double> data);

@@ -11,6 +11,5 @@ public class App
         IController controller = new Controller();
         IView view = new View(controller);
         view.startView();
-
     }
 }

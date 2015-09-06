@@ -5,23 +5,15 @@ import NAU.controller.utils.UncertaintyCalculator;
 import NAU.model.POJO.TableSingleMeasurementsResultContainer;
 
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.LinkedList;
 
 public class Controller implements IController {
 
-    private DecimalFormat df;
-    private DecimalFormatSymbols decimalFormatSymbols;
-    UncertaintyCalculator mc;
+
+    private UncertaintyCalculator mc;
 
     public Controller() {
-        df = new DecimalFormat("0.00");
-        decimalFormatSymbols = new DecimalFormatSymbols();
-        decimalFormatSymbols.setDecimalSeparator(',');
-        df.setRoundingMode(RoundingMode.HALF_UP);
-        df.setDecimalFormatSymbols(decimalFormatSymbols);
+
         mc = new UncertaintyCalculator();
     }
 

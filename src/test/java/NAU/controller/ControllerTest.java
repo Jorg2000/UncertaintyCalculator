@@ -1,8 +1,6 @@
 package NAU.controller;
 
 import NAU.model.POJO.TableResultsContainer;
-import NAU.view.ViewUtils;
-import NAU.view.swing.CellEditionTableModel;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,19 +10,16 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.LinkedList;
 
-/**
- * Created by root on 05.09.2015.
- */
+
 public class ControllerTest extends Assert {
 
 
     private DecimalFormat df;
-    private DecimalFormatSymbols decimalFormatSymbols;
 
     @Before
     public void setUp() throws Exception {
         df = new DecimalFormat("0.00");
-        decimalFormatSymbols = new DecimalFormatSymbols();
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
         decimalFormatSymbols.setDecimalSeparator('.');
         df.setRoundingMode(RoundingMode.HALF_UP);
         df.setDecimalFormatSymbols(decimalFormatSymbols);

@@ -6,11 +6,14 @@ import NAU.model.POJO.TableSingleMeasurementsResultContainer;
 import NAU.view.ViewUtils;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 
@@ -24,6 +27,7 @@ public class MainWindow extends JFrame {
     private JTable table10_20;
     private JTable table20_40;
     private JTable table40_;
+    private JTable tableSingleMeasurement;
     private JLabel rser5_10;
     private JLabel sr5_10;
     private JLabel r5_10;
@@ -36,7 +40,6 @@ public class MainWindow extends JFrame {
     private JLabel rser40_;
     private JLabel sr40_;
     private JLabel r40_;
-    private JTable tableSingleMeasurement;
     private JLabel lableSingleMeasSr5_10;
     private JLabel lableSingleMeasR5_10;
     private JLabel lableSingleMeasR10_20;
@@ -45,20 +48,36 @@ public class MainWindow extends JFrame {
     private JLabel lableSingleMeasSr10_20;
     private JLabel lableSingleMeasSr20_40;
     private JLabel lableSingleMeasSr40_;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField5;
-    private JTextField textField6;
-    private JTextField textField4;
-    private JTextField textField8;
-    private JButton надрукуватиПротколButton;
-    private JTextField textField7;
+    private JTextField tf_stanUncertOfMassMeasure;
+    private JTextField tf_maxDiffTwoRes;
+    private JTextField tf_sampleNumber;
+    private JTextField tf_sampleMass01;
+    private JTextField tf_sampleMass02;
+    private JTextField tf_remainderMass01;
+    private JTextField tf_remainderMass02;
+    private JButton btPrintReport;
+    private JTextField tf_protNumber;
+    private JLabel lb_crashability01;
+    private JLabel lb_crashability02;
+    private JLabel lb_sampleMassMean01;
+    private JLabel lb_reminderMassMedium;
+    private JLabel lb_stanUncertaintySampMass;
+    private JLabel lb_stanUncertaintyRemMass;
+    private JLabel lb_influence_coeff;
+    private JLabel lb_roundMass;
+    private JLabel lb_constMass;
+    private JLabel lb_uncertByRoundness;
+    private JLabel lb_convergence;
+    private JLabel lb_cumulStandartUncertainty;
+    private JLabel lb_extendUncertainty;
 
     private DecimalFormat df;
 
     private IController controller;
     private ViewUtils viewUtils;
+
+    private Double[] sampleMassData;
+    private Double[] reminderMassData;
 
     public MainWindow(IController c) {
         super("Оцінювання невизначеності для методики");
@@ -69,7 +88,15 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         String[] columnNames = {"№", "W1, %", "W2, %", "R, %"};
-        String[] columnNamesSingle = {"№", "5-10", "10-20", "20-40", ">40"};
+        String[] columnNamesSingle = {"<html><center>№<br>п/п</center></html>",
+                "<html><center>5-10<br>W</center></html>", "<html><center>10-20<br>W</center></html>",
+                "<html><center>20-40<br>W</center></html>", "<html><center> >40<br>W</center></html>"};
+
+        sampleMassData = new Double[2];
+        Arrays.fill(sampleMassData,new Double(0));
+
+        reminderMassData = new Double[2];
+        Arrays.fill(reminderMassData,new Double(0));
 
         df = new DecimalFormat("0.00");
         DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
@@ -184,6 +211,90 @@ public class MainWindow extends JFrame {
             }
         });
 
+        tf_sampleMass01.getDocument().addDocumentListener(new DocumentListener() {
+
+            public void insertUpdate(DocumentEvent e) {
+                showMean();
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                showMean();
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+                showMean();
+            }
+
+            private void showMean() {
+                sampleMassData[0] = viewUtils.getDoubleNumberFromTextField(tf_sampleMass01);
+                double result = controller.meanAmplitude(Arrays.asList(sampleMassData));
+                lb_sampleMassMean01.setText(df.format(result));
+            }
+        });
+
+        tf_sampleMass02.getDocument().addDocumentListener(new DocumentListener() {
+
+            public void insertUpdate(DocumentEvent e) {
+                showMean();
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                showMean();
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+                showMean();
+            }
+            private void showMean() {
+                sampleMassData[1] = viewUtils.getDoubleNumberFromTextField(tf_sampleMass02);
+                double result = controller.meanAmplitude(Arrays.asList(sampleMassData));
+                lb_sampleMassMean01.setText(df.format(result));
+            }
+        });
+
+        tf_remainderMass01.getDocument().addDocumentListener(new DocumentListener() {
+
+            public void insertUpdate(DocumentEvent e) {
+                showMean();
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                showMean();
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+                showMean();
+            }
+            private void showMean() {
+                reminderMassData[0] = viewUtils.getDoubleNumberFromTextField(tf_remainderMass01);
+                double result = controller.meanAmplitude(Arrays.asList(reminderMassData));
+                lb_reminderMassMedium.setText(df.format(result));
+            }
+        });
+
+        tf_remainderMass02.getDocument().addDocumentListener(new DocumentListener() {
+
+            public void insertUpdate(DocumentEvent e) {
+                showMean();
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                showMean();
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+                showMean();
+            }
+            private void showMean() {
+                reminderMassData[1] = viewUtils.getDoubleNumberFromTextField(tf_remainderMass02);
+                double result = controller.meanAmplitude(Arrays.asList(reminderMassData));
+                lb_reminderMassMedium.setText(df.format(result));
+            }
+        });
+
+
+
+
 
         setVisible(true);
         pack();
@@ -214,11 +325,9 @@ public class MainWindow extends JFrame {
 
     }
 
-
     private void tableConfigure(JTable table, CellEditionTableModel model) {
         table.setModel(model);
         table.setRowSelectionAllowed(false);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
     }
-
 }

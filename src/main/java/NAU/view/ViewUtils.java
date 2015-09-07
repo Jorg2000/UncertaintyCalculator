@@ -2,6 +2,7 @@ package NAU.view;
 
 import NAU.controller.IController;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -15,8 +16,8 @@ public class ViewUtils {
 
     private final DecimalFormat df;
     private IController controller;
+    Pattern cellTextPattern;
 
-    private Pattern cellTextPattern;
 
     public ViewUtils(IController c) {
         controller = c;
@@ -33,10 +34,9 @@ public class ViewUtils {
         LinkedList<Double> amplitudes = new LinkedList<Double>();
         for (int i = 0; i < model.getRowCount(); i++) {
             if (model.getValueAt(i, col) != null) {
-                String curr = (String) model.getValueAt(i, col);
+                String curr = ((String) model.getValueAt(i, col)).trim();
                 if (!curr.equals("")) {
-                    Matcher cellText = cellTextPattern.matcher(curr);
-                    if (cellText.find()) {
+                    if (stringIsNumber(curr)) {
                         curr = curr.replace(',', '.');
                         amplitudes.add(Double.parseDouble(curr));
                     }
@@ -55,11 +55,10 @@ public class ViewUtils {
 
         for (int i = 0; i < model.getRowCount(); i++) {
             if (model.getValueAt(i, 1) != null & model.getValueAt(i, 2) != null) {
-                w1String = (String) model.getValueAt(i, 1);
-                w2String = (String) model.getValueAt(i, 2);
-                Matcher matchW1 = cellTextPattern.matcher(w1String);
-                Matcher matchW2 = cellTextPattern.matcher(w2String);
-                if (matchW1.find() & matchW2.find()) {
+                w1String = ((String) model.getValueAt(i, 1)).trim();
+                w2String = ((String) model.getValueAt(i, 2)).trim();
+
+                if (stringIsNumber(w1String) & stringIsNumber(w2String)) {
                     w1String = w1String.replace(',', '.');
                     w2String = w2String.replace(',', '.');
                     w1 = Double.parseDouble(w1String);
@@ -71,4 +70,32 @@ public class ViewUtils {
             }
         }
     }
+
+    public boolean stringIsNumber(String str) {
+        String data;
+        if (str != null) {
+            data = str;
+            Pattern cellTextPattern;
+            cellTextPattern = Pattern.compile("(^[0-9.,-]+$)");
+            Matcher matcher = cellTextPattern.matcher(data);
+            return matcher.find();
+        }
+        else {
+            return false;
+        }
+    }
+    /*Taking double number from JTextfield object*/
+    public  double getDoubleNumberFromTextField(JTextField jTextField)  {
+        if (jTextField != null) {
+            String curr = jTextField.getText().trim();
+            if (!curr.equals("")) {
+                if (stringIsNumber(curr)) {
+                    curr = curr.replace(',', '.');
+                    return Double.parseDouble(curr);
+                }
+            }
+        }
+        return 0;
+    }
+
 }

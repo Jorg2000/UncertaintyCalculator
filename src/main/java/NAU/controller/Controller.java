@@ -6,6 +6,7 @@ import NAU.model.POJO.TableSingleMeasurementsResultContainer;
 
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class Controller implements IController {
 
@@ -16,7 +17,7 @@ public class Controller implements IController {
         mc = new UncertaintyCalculator();
     }
 
-    public double meanAmplitude(LinkedList<Double> data) {
+    public double meanAmplitude(List<Double> data) {
         if (data.size() > 0) {
             return mc.mean(data);
         } else {
@@ -28,7 +29,7 @@ public class Controller implements IController {
         return mc.stanDevByConst(mean);
     }
 
-    public double stDev(LinkedList<Double> data) {
+    public double stDev(List<Double> data) {
         return mc.stanDev(data);
     }
 

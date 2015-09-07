@@ -5,6 +5,7 @@ import NAU.view.swing.CellEditionTableModel;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.swing.*;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -16,11 +17,13 @@ import static org.junit.Assert.*;
 public class ViewUtilsTest {
 
     private CellEditionTableModel testTableModel;
+    private DecimalFormat df;
+    private DecimalFormatSymbols decimalFormatSymbols;
 
     @Before
     public void setUp() throws Exception {
-        DecimalFormat df = new DecimalFormat("0,00");
-        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
+        df = new DecimalFormat("0.00");
+        decimalFormatSymbols = new DecimalFormatSymbols();
         decimalFormatSymbols.setDecimalSeparator('.');
         df.setRoundingMode(RoundingMode.HALF_UP);
         df.setDecimalFormatSymbols(decimalFormatSymbols);
@@ -127,7 +130,7 @@ public class ViewUtilsTest {
         testTableModel.setValueAt("3,3", 2, 3);
 
         LinkedList<Double> actual = viewUtils.getDataFromTable(testTableModel, 3);
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
 
     }
 
@@ -160,12 +163,123 @@ public class ViewUtilsTest {
     }
 
     @Test
+    public void testGetResultsDataFromTableHasSpacesData() throws Exception {
+        Controller controller = new Controller();
+        ViewUtils viewUtils = new ViewUtils(controller);
+        LinkedList<Double> expected = new LinkedList<Double>();
+        expected.add(1.1);expected.add(3.3);
+        testTableModel.setValueAt(" 1,1 ", 0, 3);
+        testTableModel.setValueAt(" 3.3 ", 1, 3);
+        testTableModel.setValueAt(null, 2, 3);
+        LinkedList<Double> actual = viewUtils.getDataFromTable(testTableModel, 3);
+        assertEquals(expected,actual);
+    }
+
+
+    @Test
     public void testGetResultsDataFromTableHasNoData() throws Exception {
         Controller controller = new Controller();
         ViewUtils viewUtils = new ViewUtils(controller);
         LinkedList<Double> expected = new LinkedList<Double>();
         LinkedList<Double> actual = viewUtils.getDataFromTable(testTableModel, 3);
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 
+    /*Input string contains string with normal fractional or integer number*/
+    @Test
+    public void testStringIsNumberNormalData() throws Exception {
+        Controller controller = new Controller();
+        ViewUtils viewUtils = new ViewUtils(controller);
+        String testString = "0.95";
+        boolean result = viewUtils.stringIsNumber(testString);
+        assertTrue(result);
+    }
+    /*Input string contains comma as decimal separator*/
+    @Test
+    public void testStringIsNumberCommaSeparator() throws Exception {
+        Controller controller = new Controller();
+        ViewUtils viewUtils = new ViewUtils(controller);
+        String testString = "0,95";
+        boolean result = viewUtils.stringIsNumber(testString);
+        assertTrue(result);
+    }
+
+    /*Input string contains spaces before and after the number*/
+    @Test
+    public void testStringIsNumberHasSpaceBeforeAndAfter() throws Exception {
+        Controller controller = new Controller();
+        ViewUtils viewUtils = new ViewUtils(controller);
+        String testString = " 0,95 ";
+        boolean result = viewUtils.stringIsNumber(testString);
+        assertFalse(result);
+    }
+
+    /*Input string doesn't contains numbers*/
+    @Test
+    public void testStringIsNumberBadData() throws Exception {
+        Controller controller = new Controller();
+        ViewUtils viewUtils = new ViewUtils(controller);
+        String testString = "xyz";
+        boolean result = viewUtils.stringIsNumber(testString);
+        assertFalse(result);
+    }
+
+    /*Input string is NULL*/
+    @Test
+    public void testStringIsNumberNULLData() throws Exception {
+        Controller controller = new Controller();
+        ViewUtils viewUtils = new ViewUtils(controller);
+        String testString = null;
+        boolean result = viewUtils.stringIsNumber(testString);
+        assertFalse(result);
+    }
+
+    /*Input string is empty*/
+    @Test
+    public void testStringIsNumberEmptyData() throws Exception {
+        Controller controller = new Controller();
+        ViewUtils viewUtils = new ViewUtils(controller);
+        String testString = "";
+        boolean result = viewUtils.stringIsNumber(testString);
+        assertFalse(result);
+    }
+
+    /*Current test field has ordinary string with fractional or integer number*/
+    @Test
+    public void testGetDoubleNumberFromTextFieldNormalData() throws Exception {
+
+        Controller controller = new Controller();
+        ViewUtils viewUtils = new ViewUtils(controller);
+        JTextField testField = new JTextField();
+        testField.setText("0,95");
+        double expected = 0.95;
+        double actual = viewUtils.getDoubleNumberFromTextField(testField);
+        assertEquals(df.format(expected), df.format(actual));
+
+    }
+
+    /*Current test field has bad data (text and random symbols)*/
+    @Test
+    public void testGetDoubleNumberFromTextFieldBadData() throws Exception {
+
+        Controller controller = new Controller();
+        ViewUtils viewUtils = new ViewUtils(controller);
+        JTextField testField = new JTextField();
+        testField.setText("akjshkjasdh-123,.");
+        double expected = 0;
+        double actual = viewUtils.getDoubleNumberFromTextField(testField);
+        assertEquals(df.format(expected),df.format(actual));
+    }
+
+    /*Current test field has bad data (text and random symbols)*/
+    @Test
+    public void testGetDoubleNumberFromTextFieldNULLData() throws Exception {
+
+        Controller controller = new Controller();
+        ViewUtils viewUtils = new ViewUtils(controller);
+        JTextField testField = null;
+        double expected = 0;
+        double actual = viewUtils.getDoubleNumberFromTextField(testField);
+        assertEquals(df.format(expected),df.format(actual));
+    }
 }

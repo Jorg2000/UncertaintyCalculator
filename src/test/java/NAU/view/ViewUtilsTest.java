@@ -42,7 +42,7 @@ public class ViewUtilsTest {
 
 
         viewUtils.tableAmplitudeCalculator(testTableModel);
-        String actual = (String)testTableModel.getValueAt(0,3);
+        String actual = (String) testTableModel.getValueAt(0, 3);
         String expected = "4,40";
         assertEquals(expected, actual);
     }
@@ -57,7 +57,7 @@ public class ViewUtilsTest {
 
 
         viewUtils.tableAmplitudeCalculator(testTableModel);
-        String actual = (String)testTableModel.getValueAt(0,3);
+        String actual = (String) testTableModel.getValueAt(0, 3);
         assertNull(actual);
     }
 
@@ -70,7 +70,7 @@ public class ViewUtilsTest {
         testTableModel.setValueAt("", 0, 2);
 
         viewUtils.tableAmplitudeCalculator(testTableModel);
-        String actual = (String)testTableModel.getValueAt(0,3);
+        String actual = (String) testTableModel.getValueAt(0, 3);
         assertNull(actual);
     }
 
@@ -83,7 +83,7 @@ public class ViewUtilsTest {
         testTableModel.setValueAt("-1,1", 0, 2);
 
         viewUtils.tableAmplitudeCalculator(testTableModel);
-        String actual = (String)testTableModel.getValueAt(0,3);
+        String actual = (String) testTableModel.getValueAt(0, 3);
         String expected = "3,30";
         assertEquals(expected, actual);
     }
@@ -98,7 +98,7 @@ public class ViewUtilsTest {
 
 
         viewUtils.tableAmplitudeCalculator(testTableModel);
-        String actual = (String)testTableModel.getValueAt(0,3);
+        String actual = (String) testTableModel.getValueAt(0, 3);
         String expected = "3,30";
         assertEquals(expected, actual);
     }
@@ -113,7 +113,7 @@ public class ViewUtilsTest {
         testTableModel.setValueAt("-1.1", 0, 3);
 
         viewUtils.tableAmplitudeCalculator(testTableModel);
-        String actual = (String)testTableModel.getValueAt(0, 3);
+        String actual = (String) testTableModel.getValueAt(0, 3);
 
         assertNull(actual);
     }
@@ -123,7 +123,9 @@ public class ViewUtilsTest {
         Controller controller = new Controller();
         ViewUtils viewUtils = new ViewUtils(controller);
         LinkedList<Double> expected = new LinkedList<Double>();
-        expected.add(1.1);expected.add(2.2);expected.add(3.3);
+        expected.add(1.1);
+        expected.add(2.2);
+        expected.add(3.3);
 
         testTableModel.setValueAt("1,1", 0, 3);
         testTableModel.setValueAt("2,2", 1, 3);
@@ -139,14 +141,15 @@ public class ViewUtilsTest {
         Controller controller = new Controller();
         ViewUtils viewUtils = new ViewUtils(controller);
         LinkedList<Double> expected = new LinkedList<Double>();
-        expected.add(1.1);expected.add(3.3);
+        expected.add(1.1);
+        expected.add(3.3);
 
         testTableModel.setValueAt("1,1", 0, 3);
         testTableModel.setValueAt("", 1, 3);
         testTableModel.setValueAt("3,3", 2, 3);
-        LinkedList<Double> actual  = viewUtils.getDataFromTable(testTableModel, 3);
+        LinkedList<Double> actual = viewUtils.getDataFromTable(testTableModel, 3);
 
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -154,12 +157,13 @@ public class ViewUtilsTest {
         Controller controller = new Controller();
         ViewUtils viewUtils = new ViewUtils(controller);
         LinkedList<Double> expected = new LinkedList<Double>();
-        expected.add(1.1);expected.add(3.3);
+        expected.add(1.1);
+        expected.add(3.3);
         testTableModel.setValueAt("1,1", 0, 3);
         testTableModel.setValueAt("3.3", 1, 3);
         testTableModel.setValueAt(null, 2, 3);
         LinkedList<Double> actual = viewUtils.getDataFromTable(testTableModel, 3);
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -167,12 +171,13 @@ public class ViewUtilsTest {
         Controller controller = new Controller();
         ViewUtils viewUtils = new ViewUtils(controller);
         LinkedList<Double> expected = new LinkedList<Double>();
-        expected.add(1.1);expected.add(3.3);
+        expected.add(1.1);
+        expected.add(3.3);
         testTableModel.setValueAt(" 1,1 ", 0, 3);
         testTableModel.setValueAt(" 3.3 ", 1, 3);
         testTableModel.setValueAt(null, 2, 3);
         LinkedList<Double> actual = viewUtils.getDataFromTable(testTableModel, 3);
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 
 
@@ -194,6 +199,7 @@ public class ViewUtilsTest {
         boolean result = viewUtils.stringIsNumber(testString);
         assertTrue(result);
     }
+
     /*Input string contains comma as decimal separator*/
     @Test
     public void testStringIsNumberCommaSeparator() throws Exception {
@@ -268,7 +274,7 @@ public class ViewUtilsTest {
         testField.setText("akjshkjasdh-123,.");
         double expected = 0;
         double actual = viewUtils.getDoubleNumberFromTextField(testField);
-        assertEquals(df.format(expected),df.format(actual));
+        assertEquals(df.format(expected), df.format(actual));
     }
 
     /*Current test field has bad data (text and random symbols)*/
@@ -280,6 +286,6 @@ public class ViewUtilsTest {
         JTextField testField = null;
         double expected = 0;
         double actual = viewUtils.getDoubleNumberFromTextField(testField);
-        assertEquals(df.format(expected),df.format(actual));
+        assertEquals(df.format(expected), df.format(actual));
     }
 }

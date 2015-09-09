@@ -17,7 +17,7 @@ public class Controller implements IController {
         mc = new UncertaintyCalculator();
     }
 
-    public double meanAmplitude(List<Double> data) {
+    public double mean(List<Double> data) {
         if (data.size() > 0) {
             return mc.mean(data);
         } else {
@@ -42,7 +42,7 @@ public class Controller implements IController {
     }
 
     public TableResultsContainer getResultForData(LinkedList<Double> data) {
-        double mean = meanAmplitude(data);
+        double mean = mean(data);
         double stDev = stDevByConstant(mean);
         double repLim = repeatabilityLimit(stDev);
         return new TableResultsContainer(mean, stDev, repLim);
@@ -52,5 +52,9 @@ public class Controller implements IController {
         double stDev = stDev(data);
         double repLim = repeatabilityLimit(stDev);
         return new TableSingleMeasurementsResultContainer(stDev, repLim);
+    }
+
+    public double crushabilityCalc(double sampleMass, double remainMass) {
+        return mc.crushability(sampleMass, remainMass);
     }
 }

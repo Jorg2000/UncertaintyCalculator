@@ -57,8 +57,8 @@ public class MainWindow extends JFrame {
     private JTextField tf_remainderMass02;
     private JButton btPrintReport;
     private JTextField tf_protNumber;
-    private JLabel lb_crashability01;
-    private JLabel lb_crashability02;
+    private JLabel lb_crushability01;
+    private JLabel lb_crushability02;
     private JLabel lb_sampleMassMean01;
     private JLabel lb_reminderMassMedium;
     private JLabel lb_stanUncertaintySampMass;
@@ -70,6 +70,7 @@ public class MainWindow extends JFrame {
     private JLabel lb_convergence;
     private JLabel lb_cumulStandartUncertainty;
     private JLabel lb_extendUncertainty;
+    private JLabel lb_crushabilityMean;
 
     private DecimalFormat df;
 
@@ -78,6 +79,8 @@ public class MainWindow extends JFrame {
 
     private Double[] sampleMassData;
     private Double[] reminderMassData;
+    private Double[] crushabilityData;
+
 
     public MainWindow(IController c) {
         super("Оцінювання невизначеності для методики");
@@ -97,6 +100,9 @@ public class MainWindow extends JFrame {
 
         reminderMassData = new Double[2];
         Arrays.fill(reminderMassData,new Double(0));
+
+        crushabilityData = new Double[2];
+        Arrays.fill(crushabilityData ,new Double(0));
 
         df = new DecimalFormat("0.00");
         DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
@@ -215,20 +221,31 @@ public class MainWindow extends JFrame {
 
             public void insertUpdate(DocumentEvent e) {
                 showMean();
+                showCrash();
             }
 
             public void removeUpdate(DocumentEvent e) {
                 showMean();
+                showCrash();
             }
 
             public void changedUpdate(DocumentEvent e) {
                 showMean();
+                showCrash();
             }
 
             private void showMean() {
                 sampleMassData[0] = viewUtils.getDoubleNumberFromTextField(tf_sampleMass01);
-                double result = controller.meanAmplitude(Arrays.asList(sampleMassData));
+                double result = controller.mean(Arrays.asList(sampleMassData));
                 lb_sampleMassMean01.setText(df.format(result));
+            }
+
+            private void showCrash() {
+                DecimalFormat dfLocal = new DecimalFormat("0.0");
+                crushabilityData[0] = controller.crushabilityCalc(sampleMassData[0], reminderMassData[0]);
+                lb_crushability01.setText(dfLocal.format(crushabilityData[0]));
+                double result = controller.mean(Arrays.asList(crushabilityData));
+                lb_crushabilityMean.setText(dfLocal.format(result));
             }
         });
 
@@ -236,39 +253,62 @@ public class MainWindow extends JFrame {
 
             public void insertUpdate(DocumentEvent e) {
                 showMean();
+                showCrash();
             }
 
             public void removeUpdate(DocumentEvent e) {
                 showMean();
+                showCrash();
             }
 
             public void changedUpdate(DocumentEvent e) {
                 showMean();
+                showCrash();
             }
             private void showMean() {
                 sampleMassData[1] = viewUtils.getDoubleNumberFromTextField(tf_sampleMass02);
-                double result = controller.meanAmplitude(Arrays.asList(sampleMassData));
+                double result = controller.mean(Arrays.asList(sampleMassData));
                 lb_sampleMassMean01.setText(df.format(result));
             }
+            private void showCrash() {
+                DecimalFormat dfLocal = new DecimalFormat("0.0");
+                crushabilityData[1] = controller.crushabilityCalc(sampleMassData[1], reminderMassData[1]);
+                lb_crushability02.setText(dfLocal.format(crushabilityData[1]));
+                double result = controller.mean(Arrays.asList(crushabilityData));
+                lb_crushabilityMean.setText(dfLocal.format(result));
+
+            }
+
+
         });
 
         tf_remainderMass01.getDocument().addDocumentListener(new DocumentListener() {
 
             public void insertUpdate(DocumentEvent e) {
                 showMean();
+                showCrash();
             }
 
             public void removeUpdate(DocumentEvent e) {
                 showMean();
+                showCrash();
             }
 
             public void changedUpdate(DocumentEvent e) {
                 showMean();
+                showCrash();
             }
             private void showMean() {
                 reminderMassData[0] = viewUtils.getDoubleNumberFromTextField(tf_remainderMass01);
-                double result = controller.meanAmplitude(Arrays.asList(reminderMassData));
+                double result = controller.mean(Arrays.asList(reminderMassData));
                 lb_reminderMassMedium.setText(df.format(result));
+            }
+            private void showCrash() {
+                DecimalFormat dfLocal = new DecimalFormat("0.0");
+                crushabilityData[0] = controller.crushabilityCalc(sampleMassData[0], reminderMassData[0]);
+                lb_crushability01.setText(dfLocal.format(crushabilityData[0]));
+                double result = controller.mean(Arrays.asList(crushabilityData));
+                lb_crushabilityMean.setText(dfLocal.format(result));
             }
         });
 
@@ -276,20 +316,33 @@ public class MainWindow extends JFrame {
 
             public void insertUpdate(DocumentEvent e) {
                 showMean();
+                showCrash();
             }
 
             public void removeUpdate(DocumentEvent e) {
                 showMean();
+                showCrash();
             }
 
             public void changedUpdate(DocumentEvent e) {
                 showMean();
+                showCrash();
             }
             private void showMean() {
                 reminderMassData[1] = viewUtils.getDoubleNumberFromTextField(tf_remainderMass02);
-                double result = controller.meanAmplitude(Arrays.asList(reminderMassData));
+                double result = controller.mean(Arrays.asList(reminderMassData));
                 lb_reminderMassMedium.setText(df.format(result));
             }
+
+            private void showCrash() {
+                DecimalFormat dfLocal = new DecimalFormat("0.0");
+                crushabilityData[1] = controller.crushabilityCalc(sampleMassData[1], reminderMassData[1]);
+                lb_crushability02.setText(dfLocal.format(crushabilityData[1]));
+                double result = controller.mean(Arrays.asList(crushabilityData));
+                lb_crushabilityMean.setText(dfLocal.format(result));
+
+            }
+
         });
 
 

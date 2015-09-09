@@ -15,8 +15,8 @@ import java.util.regex.Pattern;
 public class ViewUtils {
 
     private final DecimalFormat df;
-    private IController controller;
     Pattern cellTextPattern;
+    private IController controller;
 
 
     public ViewUtils(IController c) {
@@ -79,13 +79,13 @@ public class ViewUtils {
             cellTextPattern = Pattern.compile("(^[0-9.,-]+$)");
             Matcher matcher = cellTextPattern.matcher(data);
             return matcher.find();
-        }
-        else {
+        } else {
             return false;
         }
     }
+
     /*Taking double number from JTextfield object*/
-    public  double getDoubleNumberFromTextField(JTextField jTextField)  {
+    public double getDoubleNumberFromTextField(JTextField jTextField) {
         if (jTextField != null) {
             String curr = jTextField.getText().trim();
             if (!curr.equals("")) {

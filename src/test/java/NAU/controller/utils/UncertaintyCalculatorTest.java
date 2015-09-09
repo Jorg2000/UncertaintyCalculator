@@ -61,4 +61,30 @@ public  class UncertaintyCalculatorTest extends Assert {
             double expected = 2.09;
             assertEquals(df.format(expected), df.format(actual));
         }
+
+    @Test
+    public void testCrushabilityA() throws Exception {
+
+        DecimalFormat localDF = new DecimalFormat("0.0");
+        UncertaintyCalculator mc = new UncertaintyCalculator();
+        double sampleMass = 1344.2;
+        double remainMass = 1324.2;
+        double actual = mc.crushability(sampleMass, remainMass);
+        double expected = 1.5;
+        assertEquals(localDF.format(expected), localDF.format(actual));
+
     }
+
+    @Test
+    public void testCrushabilityB() throws Exception {
+
+        DecimalFormat localDF = new DecimalFormat("0.0");
+        UncertaintyCalculator mc = new UncertaintyCalculator();
+        double sampleMass = 1330.1;
+        double remainMass = 1319.1;
+        double actual = mc.crushability(sampleMass,remainMass);
+        double expected = 0.8;
+        assertEquals(localDF.format(expected), localDF.format(actual));
+
+    }
+}

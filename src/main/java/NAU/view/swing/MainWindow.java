@@ -10,9 +10,13 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -48,8 +52,6 @@ public class MainWindow extends JFrame {
     private JLabel lableSingleMeasSr10_20;
     private JLabel lableSingleMeasSr20_40;
     private JLabel lableSingleMeasSr40_;
-    private JTextField tf_stanUncertOfMassMeasure;
-    private JTextField tf_maxDiffTwoRes;
     private JTextField tf_sampleNumber;
     private JTextField tf_sampleMass01;
     private JTextField tf_sampleMass02;
@@ -71,6 +73,8 @@ public class MainWindow extends JFrame {
     private JLabel lb_cumulStandartUncertainty;
     private JLabel lb_extendUncertainty;
     private JLabel lb_crushabilityMean;
+    private JFormattedTextField tf_stanUncertOfMassMeasure;
+    private JFormattedTextField tf_maxDiffTwoRes;
 
     private DecimalFormat df;
 
@@ -80,6 +84,7 @@ public class MainWindow extends JFrame {
     private Double[] sampleMassData;
     private Double[] reminderMassData;
     private Double[] crushabilityData;
+
 
 
     public MainWindow(IController c) {
@@ -110,6 +115,16 @@ public class MainWindow extends JFrame {
         df.setRoundingMode(RoundingMode.HALF_UP);
         df.setDecimalFormatSymbols(decimalFormatSymbols);
 
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
+        tf_stanUncertOfMassMeasure.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(decimalFormat)));
+        tf_maxDiffTwoRes.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(decimalFormat)));
+
+
+
+
+
+
         int rows = 20;
         int cols = 4;
         final CellEditionTableModel tableModel5_10 = new CellEditionTableModel(rows, cols);
@@ -129,6 +144,7 @@ public class MainWindow extends JFrame {
         tableConfigure(table20_40, tableModel20_40);
         tableConfigure(table40_, tableModel40_);
         tableConfigure(tableSingleMeasurement, tableModelSingleMeasurements);
+
 
 
         ListSelectionModel cellSelection5_10 = table5_10.getSelectionModel();

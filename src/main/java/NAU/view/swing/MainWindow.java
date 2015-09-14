@@ -89,7 +89,6 @@ public class MainWindow extends JFrame {
     private Double[] crushabilityData;
 
 
-
     public MainWindow(IController c) {
         super("Оцінювання невизначеності для методики");
         controller = c;
@@ -104,13 +103,13 @@ public class MainWindow extends JFrame {
                 "<html><center>20-40<br>W</center></html>", "<html><center> >40<br>W</center></html>"};
 
         sampleMassData = new Double[2];
-        Arrays.fill(sampleMassData,new Double(0));
+        Arrays.fill(sampleMassData, new Double(0));
 
         reminderMassData = new Double[2];
-        Arrays.fill(reminderMassData,new Double(0));
+        Arrays.fill(reminderMassData, new Double(0));
 
         crushabilityData = new Double[2];
-        Arrays.fill(crushabilityData ,new Double(0));
+        Arrays.fill(crushabilityData, new Double(0));
 
         df = new DecimalFormat("0.00");
         DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
@@ -126,10 +125,6 @@ public class MainWindow extends JFrame {
         tf_sampleMass02.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(decimalFormat)));
         tf_remainderMass01.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(decimalFormat)));
         tf_remainderMass02.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(decimalFormat)));
-
-
-
-
 
 
         int rows = 20;
@@ -151,7 +146,6 @@ public class MainWindow extends JFrame {
         tableConfigure(table20_40, tableModel20_40);
         tableConfigure(table40_, tableModel40_);
         tableConfigure(tableSingleMeasurement, tableModelSingleMeasurements);
-
 
 
         ListSelectionModel cellSelection5_10 = table5_10.getSelectionModel();
@@ -269,7 +263,6 @@ public class MainWindow extends JFrame {
         });
 
 
-
         tf_sampleMass01.getDocument().addDocumentListener(new DocumentListener() {
 
             public void insertUpdate(DocumentEvent e) {
@@ -318,11 +311,13 @@ public class MainWindow extends JFrame {
                 showMean();
                 showCrash();
             }
+
             private void showMean() {
                 sampleMassData[1] = viewUtils.getDoubleNumberFromTextField(tf_sampleMass02);
                 double result = controller.mean(Arrays.asList(sampleMassData));
                 lb_sampleMassMean01.setText(df.format(result));
             }
+
             private void showCrash() {
                 DecimalFormat dfLocal = new DecimalFormat("0.0");
                 crushabilityData[1] = controller.crushabilityCalc(sampleMassData[1], reminderMassData[1]);
@@ -351,11 +346,13 @@ public class MainWindow extends JFrame {
                 showMean();
                 showCrash();
             }
+
             private void showMean() {
                 reminderMassData[0] = viewUtils.getDoubleNumberFromTextField(tf_remainderMass01);
                 double result = controller.mean(Arrays.asList(reminderMassData));
                 lb_reminderMassMedium.setText(df.format(result));
             }
+
             private void showCrash() {
                 DecimalFormat dfLocal = new DecimalFormat("0.0");
                 crushabilityData[0] = controller.crushabilityCalc(sampleMassData[0], reminderMassData[0]);
@@ -383,6 +380,7 @@ public class MainWindow extends JFrame {
                 showCrash();
 
             }
+
             private void showMean() {
                 reminderMassData[1] = viewUtils.getDoubleNumberFromTextField(tf_remainderMass02);
                 double result = controller.mean(Arrays.asList(reminderMassData));
@@ -408,8 +406,6 @@ public class MainWindow extends JFrame {
             }
         };
         lb_reminderMassMedium.addPropertyChangeListener(pcl_lbReminderMassMean);
-
-
 
 
         setVisible(true);
@@ -448,7 +444,7 @@ public class MainWindow extends JFrame {
     }
 
     private void writeInfluenceCM1Coeff() {
-        String data = lb_reminderMassMedium.getText().replace(",",".");
+        String data = lb_reminderMassMedium.getText().replace(",", ".");
         if (viewUtils.stringIsNumber(data)) {
             double mean = controller.influenceCoeff(Double.parseDouble(data));
             lb_cm1_influence_coeff.setText(df.format(mean));
@@ -457,12 +453,12 @@ public class MainWindow extends JFrame {
 
     private void writeInfluenceCM1CoeffUX_CX() {
 
-        String dataInfluenceCoeff = lb_cm1_influence_coeff.getText().replace(",",".");
-        String dataStdUncertainty = tf_stanUncertOfMassMeasure.getText().replace(",",".");
+        String dataInfluenceCoeff = lb_cm1_influence_coeff.getText().replace(",", ".");
+        String dataStdUncertainty = tf_stanUncertOfMassMeasure.getText().replace(",", ".");
         DecimalFormat dfLocal = new DecimalFormat("0.0");
 
         if (viewUtils.stringIsNumber(dataInfluenceCoeff)
-                & viewUtils.stringIsNumber(dataStdUncertainty)){
+                & viewUtils.stringIsNumber(dataStdUncertainty)) {
             double res = controller.influenceCoeffUxCx(
                     Double.parseDouble(dataStdUncertainty),
                     Double.parseDouble(dataInfluenceCoeff));
@@ -472,7 +468,7 @@ public class MainWindow extends JFrame {
 
 
     private void writeConstMassUncertainty() {
-        String data = lb_reminderMassMedium.getText().replace(",",".");
+        String data = lb_reminderMassMedium.getText().replace(",", ".");
         if (data != null & viewUtils.stringIsNumber(data)) {
             double res = controller.constMassUncertainty(Double.parseDouble(data));
             lb_constMassUncert.setText(df.format(res));

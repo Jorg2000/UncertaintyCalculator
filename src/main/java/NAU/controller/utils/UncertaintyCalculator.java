@@ -56,6 +56,7 @@ public class UncertaintyCalculator {
     public double repeatabilityLimit(double stanDev) {
         return 2.77 * stanDev;
     }
+
     /*Calculation of crushability*/
     public double crushability(double sampleMass, double remainedMass) {
 
@@ -70,14 +71,14 @@ public class UncertaintyCalculator {
         }
         return 0.0;
     }
+
     /*Coefficient of the influence*/
     public double influenceCoeff(double amount) {
-        if (amount !=0) {
+        if (amount != 0) {
             BigDecimal am = new BigDecimal(amount);
             BigDecimal res = new BigDecimal(100).divide(am, mathContext);
             return res.round(mathContext).doubleValue();
-        }
-        else
+        } else
             return 0;
     }
 
@@ -88,18 +89,17 @@ public class UncertaintyCalculator {
             BigDecimal res = m.multiply(new BigDecimal(0.1)).
                     divide(new BigDecimal(2).multiply(new BigDecimal(Math.sqrt(3))), mathContext);
             return res.round(mathContext).doubleValue();
-        }
-        else {
+        } else {
             return 0;
         }
     }
+
     /*Calculation of adding uncertainty to influence Coefficient*/
-    public double influenceCoeffUxCx(double stdUncertainty, double influenceCoeff){
-        if (stdUncertainty != 0 & influenceCoeff != 0 ) {
+    public double influenceCoeffUxCx(double stdUncertainty, double influenceCoeff) {
+        if (stdUncertainty != 0 & influenceCoeff != 0) {
             BigDecimal res = new BigDecimal(stdUncertainty).multiply(new BigDecimal(influenceCoeff));
             return res.round(mathContext).doubleValue();
-        }
-        else {
+        } else {
             return 0;
         }
     }

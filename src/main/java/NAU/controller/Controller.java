@@ -57,4 +57,17 @@ public class Controller implements IController {
     public double crushabilityCalc(double sampleMass, double remainMass) {
         return mc.crushability(sampleMass, remainMass);
     }
+
+    public double influenceCoeff(double amount) {
+        return mc.influenceCoeff(amount);
+    }
+
+    public double constMassUncertainty(double mass) {
+        return mc.constMassUncertainty(mass);
+    }
+
+
+    public double influenceCoeffUxCx(double stdUncertainty, double influenceCoeff) {
+        return mc.influenceCoeffUxCx(stdUncertainty, influenceCoeff);
+    }
 }

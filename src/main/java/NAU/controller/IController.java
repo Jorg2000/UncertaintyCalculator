@@ -19,6 +19,9 @@ public interface IController {
     double crushabilityCalc(double sampleMass, double remainMass);
     TableResultsContainer getResultForData(LinkedList<Double> data);
     TableSingleMeasurementsResultContainer getResultForSingleMeasuredData(LinkedList<Double> data);
+    double influenceCoeff(double amount);
+    double constMassUncertainty(double mass);
+    public double influenceCoeffUxCx(double stdUncertainty, double influenceCoeff);
 
 
 }

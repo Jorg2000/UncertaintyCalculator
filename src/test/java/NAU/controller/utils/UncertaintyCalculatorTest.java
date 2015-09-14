@@ -87,4 +87,49 @@ public  class UncertaintyCalculatorTest extends Assert {
         assertEquals(localDF.format(expected), localDF.format(actual));
 
     }
+
+
+    @Test
+    public void testInfluenceCoeff() throws Exception {
+        DecimalFormat localDF = new DecimalFormat("0.00");
+        UncertaintyCalculator mc = new UncertaintyCalculator();
+        double amount = 1321.7;
+        double actual = mc.influenceCoeff(amount);
+        double expected = 0.08;
+        assertEquals(localDF.format(expected), localDF.format(actual));
+    }
+
+    @Test
+    public void testConstMassUncertaintyA() throws Exception {
+
+        UncertaintyCalculator mc = new UncertaintyCalculator();
+        double mass = 1321.7;
+        double actual = mc.constMassUncertainty(mass);
+        double expected = 38.15;
+        assertEquals(df.format(expected), df.format(actual));
+    }
+
+    @Test
+    public void testConstMassUncertaintyB() throws Exception {
+
+        UncertaintyCalculator mc = new UncertaintyCalculator();
+        double mass = 1319.7;
+        double actual = mc.constMassUncertainty(mass);
+        double expected = 38.10;
+        assertEquals(df.format(expected), df.format(actual));
+    }
+
+
+    @Test
+    public void testInfluenceCoeffUxCx() throws Exception {
+        UncertaintyCalculator mc = new UncertaintyCalculator();
+        DecimalFormat localDF = new DecimalFormat("0.0");
+        double stdUncertainty = 1.00;
+        double influenceCoeff = 0.08;
+        double actual = mc.influenceCoeffUxCx(stdUncertainty,influenceCoeff);
+        double expected = 0.1;
+        assertEquals(localDF.format(expected), localDF.format(actual));
+
+
+    }
 }

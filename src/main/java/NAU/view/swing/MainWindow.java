@@ -237,26 +237,35 @@ public class MainWindow extends JFrame {
         tf_stanUncertOfMassMeasure.getDocument().addDocumentListener(new DocumentListener() {
 
             public void insertUpdate(DocumentEvent e) {
-                writeToLBRemMass();
+                writeToLBRemMassUM1();
+                writeToLBSampMassUM();
                 writeInfluenceCM1CoeffUX_CX();
 
             }
 
             public void removeUpdate(DocumentEvent e) {
-                writeToLBRemMass();
+                writeToLBRemMassUM1();
+                writeToLBSampMassUM();
                 writeInfluenceCM1CoeffUX_CX();
 
             }
 
             public void changedUpdate(DocumentEvent e) {
-                writeToLBRemMass();
+                writeToLBRemMassUM1();
+                writeToLBSampMassUM();
                 writeInfluenceCM1CoeffUX_CX();
 
             }
 
-            private void writeToLBRemMass() {
+            private void writeToLBRemMassUM1() {
                 if (viewUtils.stringIsNumber(tf_stanUncertOfMassMeasure.getText())) {
                     lb_stanUncertaintyRemMass.setText(tf_stanUncertOfMassMeasure.getText());
+                }
+            }
+
+            private void writeToLBSampMassUM() {
+                if (viewUtils.stringIsNumber(tf_stanUncertOfMassMeasure.getText())){
+                    lb_stanUncertaintySampMass.setText(tf_stanUncertOfMassMeasure.getText());
                 }
             }
 

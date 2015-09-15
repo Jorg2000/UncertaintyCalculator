@@ -740,7 +740,7 @@
                       </component>
                       <component id="1049d" class="javax.swing.JLabel" binding="lb_uncertByRoundness">
                         <constraints>
-                          <grid row="12" column="4" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                          <grid row="12" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
                           <text value="0,00"/>

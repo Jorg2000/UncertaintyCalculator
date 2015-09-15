@@ -1,7 +1,7 @@
 package NAU.controller;
 
 import NAU.model.POJO.TableResultsContainer;
-import NAU.controller.utils.UncertaintyCalculator;
+import NAU.controller.utils.MathUtils;
 import NAU.model.POJO.TableSingleMeasurementsResultContainer;
 
 
@@ -10,11 +10,11 @@ import java.util.List;
 
 public class Controller implements IController {
 
-    private UncertaintyCalculator mc;
+    private MathUtils mc;
 
     public Controller() {
 
-        mc = new UncertaintyCalculator();
+        mc = new MathUtils();
     }
 
     public double mean(List<Double> data) {
@@ -59,15 +59,14 @@ public class Controller implements IController {
     }
 
     public double influenceCoeff(double amount) {
-        return mc.influenceCoeff(amount);
+        return mc.influenceCoeffCM1(amount);
     }
 
     public double constMassUncertainty(double mass) {
         return mc.constMassUncertainty(mass);
     }
 
-
     public double influenceCoeffUxCx(double stdUncertainty, double influenceCoeff) {
-        return mc.influenceCoeffUxCx(stdUncertainty, influenceCoeff);
+        return mc.uncertaintyWithInfluenceCoeff(stdUncertainty, influenceCoeff);
     }
 }

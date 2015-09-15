@@ -1,79 +1,59 @@
 package NAU.controller.utils;
 
+import NAU.model.POJO.UncertaintyDataContainer;
+
 import java.math.BigDecimal;
-
-
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.List;
 
-
+/**
+ * Created by SUSLOV on 15.09.2015.
+ */
 public class UncertaintyCalculator {
+
+    private UncertaintyDataContainer dataContainer;
     private MathContext mathContext;
+    private double influenceCoefCM1;
+    private double influenceCoefCM1CxUx;
+    private double constMassUncertainty;
+    private double influenceCoefCM;
+    private double influenceCoefCMCxUx;
+    private double roundness;
+    private double roundnessUncertainty;
+    private double convergence;
+    private double totalStandUncertainty;
+    private double extendedUncertainty;
 
-    public UncertaintyCalculator() {
+    public UncertaintyCalculator(UncertaintyDataContainer dataContainer) {
+        this.dataContainer = dataContainer;
         mathContext = new MathContext(4, RoundingMode.HALF_UP);
+        roundness = 1;
+        recalculate();
     }
 
-    public double amplitude(double w1, double w2) {
-        return Math.abs(w1 - w2);
+    public void setDataContainer(UncertaintyDataContainer dataContainer) {
+        this.dataContainer = dataContainer;
+        recalculate();
     }
 
-    public double mean(List<Double> arr) {
-        BigDecimal sum = new BigDecimal(0);
-        for (Double a : arr) {
-            sum = sum.add(new BigDecimal(a));
-        }
-
-        return sum.divide(new BigDecimal(arr.size(), mathContext)).doubleValue();
+    private void recalculate() {
+        influenceCoefCM1 = calcInfluenceCoeffCM1(dataContainer.getMeanRemainMass());
+        influenceCoefCM1CxUx = calcUncertaintyWithInfluenceCoeff(dataContainer.getStanMassWeightingUncertainty(), influenceCoefCM1);
+        constMassUncertainty = calcConstMassUncertainty(dataContainer.getMeanRemainMass());
+        influenceCoefCM = calcInfluenceCoeffCM(dataContainer.getMeanSampleMass(), dataContainer.getMeanRemainMass());
+        influenceCoefCMCxUx = calcUncertaintyWithInfluenceCoeff(dataContainer.getStanMassWeightingUncertainty(), influenceCoefCM);
+        roundnessUncertainty = calcRoundnessUncertainty(roundness);
+        convergence = calcConvergence(dataContainer.getMaxDifferenceBetweenResults());
+        totalStandUncertainty = calcTotalStandardUncertainty(dataContainer.getStanMassWeightingUncertainty(),
+                influenceCoefCM1,
+                dataContainer.getStanMassWeightingUncertainty(),
+                influenceCoefCM,
+                roundnessUncertainty, convergence);
+        extendedUncertainty = calcExtendedUncertainty(totalStandUncertainty);
     }
 
-    public double stanDevByConst(double mean) {
-
-        return mean * 0.886;
-
-    }
-
-    public double stanDev(List<Double> arr) {
-        if (arr.size() > 1) {
-
-            BigDecimal mean = new BigDecimal(mean(arr));
-
-            BigDecimal sum = new BigDecimal(0);
-            for (Double a : arr) {
-                BigDecimal ai = new BigDecimal(a);
-                BigDecimal curSub = mean.subtract(ai);
-                BigDecimal curPower = curSub.pow(2);
-                sum = sum.add(curPower);
-            }
-            BigDecimal underRoot = sum.divide(new BigDecimal(arr.size()).subtract(new BigDecimal(1)), mathContext);
-            return Math.sqrt(underRoot.round(mathContext).doubleValue());
-        } else {
-            return 0;
-        }
-    }
-
-    public double repeatabilityLimit(double stanDev) {
-        return 2.77 * stanDev;
-    }
-
-    /*Calculation of crushability*/
-    public double crushability(double sampleMass, double remainedMass) {
-
-        if (sampleMass != 0 & remainedMass != 0) {
-            MathContext localMathContext = new MathContext(3, RoundingMode.HALF_UP);
-            BigDecimal sampleMassBD = new BigDecimal(sampleMass);
-            BigDecimal remainedMassBD = new BigDecimal(remainedMass);
-            BigDecimal sub = sampleMassBD.subtract(remainedMassBD, localMathContext);
-            BigDecimal mul = sub.multiply(new BigDecimal(100.0), localMathContext);
-            BigDecimal diff = mul.divide(remainedMassBD, localMathContext);
-            return diff.doubleValue();
-        }
-        return 0.0;
-    }
-
-    /*Coefficient of the influence*/
-    public double influenceCoeff(double amount) {
+    /*Coefficient of the influence for remain weighting (cm1)*/
+    private double calcInfluenceCoeffCM1(double amount) {
         if (amount != 0) {
             BigDecimal am = new BigDecimal(amount);
             BigDecimal res = new BigDecimal(100).divide(am, mathContext);
@@ -83,7 +63,7 @@ public class UncertaintyCalculator {
     }
 
     /*Calculation of uncertainty of the constant mass */
-    public double constMassUncertainty(double mass) {
+    private double calcConstMassUncertainty(double mass) {
         if (mass != 0) {
             BigDecimal m = new BigDecimal(mass);
             BigDecimal res = m.multiply(new BigDecimal(0.1)).
@@ -95,12 +75,123 @@ public class UncertaintyCalculator {
     }
 
     /*Calculation of adding uncertainty to influence Coefficient*/
-    public double influenceCoeffUxCx(double stdUncertainty, double influenceCoeff) {
-        if (stdUncertainty != 0 & influenceCoeff != 0) {
-            BigDecimal res = new BigDecimal(stdUncertainty).multiply(new BigDecimal(influenceCoeff));
+    private double calcUncertaintyWithInfluenceCoeff(double uncertainty, double influenceCoeff) {
+        if (uncertainty != 0 & influenceCoeff != 0) {
+            BigDecimal res = new BigDecimal(uncertainty).multiply(new BigDecimal(influenceCoeff));
             return res.round(mathContext).doubleValue();
         } else {
             return 0;
         }
+    }
+
+    /*Calculation of influence coefficient for sample weighting (cm)*/
+    private double calcInfluenceCoeffCM(double sampleMeanMass, double remainMeanMass) {
+        if (sampleMeanMass != 0 & remainMeanMass != 0) {
+            BigDecimal smm = new BigDecimal(sampleMeanMass);
+            BigDecimal rmm = new BigDecimal(remainMeanMass);
+            BigDecimal numerator = new BigDecimal(100).multiply(smm);
+            BigDecimal denominator = rmm.pow(2);
+            BigDecimal res = numerator.divide(denominator, mathContext);
+            return res.round(mathContext).doubleValue();
+        } else
+            return 0;
+    }
+
+    /*Calculation of the roundness uncertainty*/
+    private double calcRoundnessUncertainty(double roundness) {
+        if (roundness != 0 & roundness >= 0) {
+            BigDecimal round = new BigDecimal(roundness);
+            BigDecimal res = round.divide(new BigDecimal(2).multiply(new BigDecimal(Math.sqrt(3))), mathContext);
+            return res.round(mathContext).doubleValue();
+        } else {
+            return 0;
+        }
+    }
+
+    /*Calculation of the convergence*/
+    private double calcConvergence(double maxDiffBetweenResults) {
+        if (maxDiffBetweenResults != 0) {
+            BigDecimal maxDiff = new BigDecimal(maxDiffBetweenResults);
+            BigDecimal res = maxDiff.divide(new BigDecimal(2.77), mathContext);
+            return res.round(mathContext).doubleValue();
+        } else {
+            return 0;
+        }
+    }
+
+    /*Calculation of total standard uncertainty */
+    private double calcTotalStandardUncertainty(double stdUncertaintyUM1,
+                                               double influenceCoeffCM1,
+                                               double stdUncertaintyUM,
+                                               double influenceCoeffCM,
+                                               double roundnessUncertainty,
+                                               double convergence) {
+
+        if (stdUncertaintyUM1 != 0 &
+                influenceCoeffCM1 != 0 &
+                stdUncertaintyUM != 0 &
+                influenceCoeffCM != 0 &
+                roundnessUncertainty != 0 &
+                convergence != 0) {
+
+            double res = Math.sqrt(Math.pow(stdUncertaintyUM1 * influenceCoeffCM1, 2) +
+                    Math.pow(stdUncertaintyUM * influenceCoeffCM, 2) +
+                    Math.pow(roundnessUncertainty, 2) +
+                    Math.pow(convergence, 2) / 2);
+
+            BigDecimal bdRes = new BigDecimal(res);
+            return bdRes.round(mathContext).doubleValue();
+        }
+        return 0;
+    }
+
+    /*Calculation of extended uncertainty*/
+    private double calcExtendedUncertainty(double uncertainty) {
+        if (uncertainty != 0) {
+
+            BigDecimal res = new BigDecimal(uncertainty * 2);
+            return res.round(mathContext).doubleValue();
+        }
+        return 0;
+    }
+
+    public double getInfluenceCoefCM1() {
+        return influenceCoefCM1;
+    }
+
+    public double getInfluenceCoefCM1CxUx() {
+        return influenceCoefCM1CxUx;
+    }
+
+    public double getConstMassUncertainty() {
+        return constMassUncertainty;
+    }
+
+    public double getInfluenceCoefCM() {
+        return influenceCoefCM;
+    }
+
+    public double getInfluenceCoefCMCxUx() {
+        return influenceCoefCMCxUx;
+    }
+
+    public double getRoundnessUncertainty() {
+        return roundnessUncertainty;
+    }
+
+    public double getConvergence() {
+        return convergence;
+    }
+
+    public double getTotalStandUncertainty() {
+        return totalStandUncertainty;
+    }
+
+    public double getExtendedUncertainty() {
+        return extendedUncertainty;
+    }
+
+    public double getRoundness() {
+        return roundness;
     }
 }

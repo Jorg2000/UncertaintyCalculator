@@ -9,6 +9,13 @@ public class UncertaintyDataContainer {
     private double meanRemainMass;
     private double maxDifferenceBetweenResults;
 
+    public UncertaintyDataContainer() {
+        this.stanMassWeightingUncertainty = 0;
+        this.meanSampleMass = 0;
+        this.meanRemainMass = 0;
+        this.maxDifferenceBetweenResults = 0;
+    }
+
     public UncertaintyDataContainer(double stanMassWeightingUncertainty, double meanSampleMass, double meanRemainMass, double maxDifferenceBetweenResults) {
         this.stanMassWeightingUncertainty = stanMassWeightingUncertainty;
         this.meanSampleMass = meanSampleMass;

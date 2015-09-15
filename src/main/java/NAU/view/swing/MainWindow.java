@@ -1,8 +1,10 @@
 package NAU.view.swing;
 
 import NAU.controller.IController;
+import NAU.controller.utils.UncertaintyCalculator;
 import NAU.model.POJO.TableResultsContainer;
 import NAU.model.POJO.TableSingleMeasurementsResultContainer;
+import NAU.model.POJO.UncertaintyDataContainer;
 import NAU.view.ViewUtils;
 
 import javax.swing.*;
@@ -69,15 +71,17 @@ public class MainWindow extends JFrame {
     private JLabel lb_constMassUncert;
     private JLabel lb_uncertByRoundness;
     private JLabel lb_convergence;
-    private JLabel lb_cumulStandartUncertainty;
+    private JLabel lb_totalStandardUncertainty;
     private JLabel lb_extendUncertainty;
     private JLabel lb_crushabilityMean;
     private JFormattedTextField tf_stanUncertOfMassMeasure;
     private JFormattedTextField tf_maxDiffTwoRes;
-    private JLabel lb_cm1_influenceCouff_UX_CX;
+    private JLabel lb_cm1_influenceCoeff_UX_CX;
     private JLabel lb_cm_influence_coeff;
-    private JLabel lb_cm_influenceCouff_UX_CX;
+    private JLabel lb_cm_influenceCoeff_UX_CX;
     private JLabel lb_roundndness;
+    private JLabel lb_roundness_UX_CX;
+    private JLabel lb_convergence_UX_CX;
 
     private DecimalFormat df;
 
@@ -87,6 +91,10 @@ public class MainWindow extends JFrame {
     private Double[] sampleMassData;
     private Double[] reminderMassData;
     private Double[] crushabilityData;
+
+
+    private UncertaintyCalculator uncertaintyCalculator;
+    private UncertaintyDataContainer uncertaintyDataContainer;
 
 
     public MainWindow(IController c) {
@@ -146,6 +154,11 @@ public class MainWindow extends JFrame {
         tableConfigure(table20_40, tableModel20_40);
         tableConfigure(table40_, tableModel40_);
         tableConfigure(tableSingleMeasurement, tableModelSingleMeasurements);
+
+        uncertaintyDataContainer = new UncertaintyDataContainer();
+        uncertaintyCalculator = new UncertaintyCalculator(uncertaintyDataContainer);
+
+
 
 
         ListSelectionModel cellSelection5_10 = table5_10.getSelectionModel();
@@ -471,7 +484,7 @@ public class MainWindow extends JFrame {
             double res = controller.influenceCoeffUxCx(
                     Double.parseDouble(dataStdUncertainty),
                     Double.parseDouble(dataInfluenceCoeff));
-            lb_cm1_influenceCouff_UX_CX.setText(dfLocal.format(res));
+            lb_cm1_influenceCoeff_UX_CX.setText(dfLocal.format(res));
         }
     }
 
@@ -483,6 +496,29 @@ public class MainWindow extends JFrame {
             lb_constMassUncert.setText(df.format(res));
         }
     }
+
+/*
+
+
+    private void updateUncertaintyComponents(){
+        DecimalFormat dfLocal = new DecimalFormat("0.0");
+        lb_stanUncertaintyRemMass.setText(df.format(uncertaintyCalculator.getStandardMassWeightUncertainty()));
+        lb_cm1_influence_coeff.setText(df.format(uncertaintyCalculator.getInfluenceCoefCM1()));
+        lb_cm1_influenceCoeff_UX_CX.setText(dfLocal.format(uncertaintyCalculator.getInfluenceCoefCM1CxUx()));
+        lb_cm_influence_coeff.setText(df.format(uncertaintyCalculator.getInfluenceCoefCM()));
+        lb_cm_influenceCoeff_UX_CX.setText(dfLocal.format(uncertaintyCalculator.getInfluenceCoefCMCxUx()));
+        lb_roundndness.setText(dfLocal.format(uncertaintyCalculator.getRoundness()));
+        lb_stanUncertaintySampMass.setText(df.format(uncertaintyCalculator.getStandardMassWeightUncertainty()));
+        lb_constMassUncert.setText(df.format(uncertaintyCalculator.getConstMassUncertainty()));
+        lb_uncertByRoundness.setText(df.format(uncertaintyCalculator.getRoundnessUncertainty()));
+        lb_roundness_UX_CX.setText(dfLocal.format(uncertaintyCalculator.getRoundnessUncertaintyCxUx()));
+        lb_convergence.setText(df.format(uncertaintyCalculator.getConvergence()));
+        lb_convergence_UX_CX.setText(dfLocal.format(uncertaintyCalculator.getConvergenceCxUx()));
+        lb_totalStandardUncertainty.setText(df.format(uncertaintyCalculator.getTotalStandUncertainty()));
+        lb_extendUncertainty.setText(dfLocal.format(uncertaintyCalculator.getExtendedUncertainty()));
+    }
+
+*/
 
 
 }

@@ -111,4 +111,25 @@ public class UncertaintyCalculatorTest extends Assert {
         double expected = 0.91;
         assertEquals(df.format(expected), df.format(actual));
     }
+
+    @Test
+    public void testGetRoundnessUncertaintyCxUx() throws Exception {
+        DecimalFormat localDF = new DecimalFormat("0.0");
+        UncertaintyDataContainer dataContainer = new UncertaintyDataContainer(1.0, 1361.9, 1326.8, 1.31);
+        UncertaintyCalculator uc = new UncertaintyCalculator(dataContainer);
+        double actual = uc.getRoundnessUncertaintyCxUx();
+        double expected = 0.3;
+        assertEquals(localDF.format(expected), localDF.format(actual));
+
+    }
+
+    @Test
+    public void testGetConvergenceCxUx() throws Exception {
+        DecimalFormat localDF = new DecimalFormat("0.0");
+        UncertaintyDataContainer dataContainer = new UncertaintyDataContainer(1.0, 1361.9, 1326.8, 1.31);
+        UncertaintyCalculator uc = new UncertaintyCalculator(dataContainer);
+        double actual = uc.getConvergenceCxUx();
+        double expected = 0.5;
+        assertEquals(localDF.format(expected), localDF.format(actual));
+    }
 }

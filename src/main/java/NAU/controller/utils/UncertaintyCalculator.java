@@ -20,9 +20,13 @@ public class UncertaintyCalculator {
     private double influenceCoefCMCxUx;
     private double roundness;
     private double roundnessUncertainty;
+    private double roundnessUncertaintyCxUx;
     private double convergence;
+    private double convergenceCxUx;
     private double totalStandUncertainty;
     private double extendedUncertainty;
+
+
 
     public UncertaintyCalculator(UncertaintyDataContainer dataContainer) {
         this.dataContainer = dataContainer;
@@ -32,9 +36,14 @@ public class UncertaintyCalculator {
     }
 
     public void setDataContainer(UncertaintyDataContainer dataContainer) {
+        recalculateUncertainty(dataContainer);
+    }
+
+    public void recalculateUncertainty(UncertaintyDataContainer dataContainer) {
         this.dataContainer = dataContainer;
         recalculate();
     }
+
 
     private void recalculate() {
         influenceCoefCM1 = calcInfluenceCoeffCM1(dataContainer.getMeanRemainMass());
@@ -43,7 +52,9 @@ public class UncertaintyCalculator {
         influenceCoefCM = calcInfluenceCoeffCM(dataContainer.getMeanSampleMass(), dataContainer.getMeanRemainMass());
         influenceCoefCMCxUx = calcUncertaintyWithInfluenceCoeff(dataContainer.getStanMassWeightingUncertainty(), influenceCoefCM);
         roundnessUncertainty = calcRoundnessUncertainty(roundness);
+        roundnessUncertaintyCxUx = calcUncertaintyWithInfluenceCoeff(roundnessUncertainty, 1);
         convergence = calcConvergence(dataContainer.getMaxDifferenceBetweenResults());
+        convergenceCxUx = calcUncertaintyWithInfluenceCoeff(convergence,1);
         totalStandUncertainty = calcTotalStandardUncertainty(dataContainer.getStanMassWeightingUncertainty(),
                 influenceCoefCM1,
                 dataContainer.getStanMassWeightingUncertainty(),
@@ -193,5 +204,17 @@ public class UncertaintyCalculator {
 
     public double getRoundness() {
         return roundness;
+    }
+
+    public double getStandardMassWeightUncertainty() {
+        return this.dataContainer.getStanMassWeightingUncertainty();
+    }
+
+    public double getRoundnessUncertaintyCxUx() {
+        return roundnessUncertaintyCxUx;
+    }
+
+    public double getConvergenceCxUx() {
+        return convergenceCxUx;
     }
 }

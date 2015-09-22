@@ -666,9 +666,9 @@
                           <text value="Середнє"/>
                         </properties>
                       </component>
-                      <component id="d9914" class="javax.swing.JLabel" binding="lb_sampleMassMean01">
+                      <component id="d9914" class="javax.swing.JLabel" binding="lb_sampleMassMean">
                         <constraints>
-                          <grid row="3" column="4" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+                          <grid row="3" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
                           <text value="0,00"/>
@@ -684,7 +684,7 @@
                       </component>
                       <component id="29440" class="javax.swing.JLabel" binding="lb_reminderMassMedium">
                         <constraints>
-                          <grid row="5" column="4" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+                          <grid row="5" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
                           <text value="0,00"/>
@@ -746,11 +746,6 @@
                         </constraints>
                         <properties/>
                       </component>
-                      <hspacer id="e0321">
-                        <constraints>
-                          <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                      </hspacer>
                       <component id="a6b7a" class="javax.swing.JButton" binding="btPrintReport">
                         <constraints>
                           <grid row="12" column="6" row-span="2" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -1011,6 +1006,11 @@
                           <text value="0,00"/>
                         </properties>
                       </component>
+                      <hspacer id="4242b">
+                        <constraints>
+                          <grid row="12" column="8" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                      </hspacer>
                     </children>
                   </grid>
                 </children>

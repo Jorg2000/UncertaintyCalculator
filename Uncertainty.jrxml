@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Uncertainty" language="groovy" pageWidth="595" pageHeight="842" columnWidth="539" leftMargin="28" rightMargin="28" topMargin="28" bottomMargin="28" uuid="08fe20b9-9cd5-4bad-9b99-2902bc95567d">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="63"/>
+	<property name="ireport.y" value="118"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -432,6 +432,13 @@
 				<reportElement x="497" y="34" width="40" height="20" uuid="b66a9458-e962-47f4-a307-857c3f08c078"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="-2" y="0" width="539" height="20" uuid="53b103c7-ce60-4a65-a835-82a6ef690184"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Розроблено для виробничої вимірювальної лабораторії ВАТ «Коростенський щебзавод»]]></text>
+			</staticText>
 		</band>
 	</pageFooter>
 	<summary>

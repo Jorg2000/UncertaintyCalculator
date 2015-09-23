@@ -658,38 +658,6 @@
                           <text value="Коефіцієнт впливу cm1"/>
                         </properties>
                       </component>
-                      <component id="22e45" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="10" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="&lt;html&gt;Стандартна невизначеність &lt;br&gt;um, г.&lt;/html&gt;"/>
-                        </properties>
-                      </component>
-                      <component id="27d76" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="11" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="Невизн. сталої маси uст.м., г."/>
-                        </properties>
-                      </component>
-                      <component id="4a932" class="javax.swing.JLabel" binding="lb_constMassUncert">
-                        <constraints>
-                          <grid row="11" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="0,00"/>
-                        </properties>
-                      </component>
-                      <component id="ea5c6" class="javax.swing.JLabel" binding="lb_stanUncertaintySampMass">
-                        <constraints>
-                          <grid row="10" column="4" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="0,00"/>
-                        </properties>
-                      </component>
                       <component id="c3364" class="javax.swing.JLabel">
                         <constraints>
                           <grid row="2" column="4" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
@@ -698,9 +666,9 @@
                           <text value="Середнє"/>
                         </properties>
                       </component>
-                      <component id="d9914" class="javax.swing.JLabel" binding="lb_sampleMassMean01">
+                      <component id="d9914" class="javax.swing.JLabel" binding="lb_sampleMassMean">
                         <constraints>
-                          <grid row="3" column="4" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+                          <grid row="3" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
                           <text value="0,00"/>
@@ -716,7 +684,7 @@
                       </component>
                       <component id="29440" class="javax.swing.JLabel" binding="lb_reminderMassMedium">
                         <constraints>
-                          <grid row="5" column="4" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+                          <grid row="5" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
                           <text value="0,00"/>
@@ -740,7 +708,7 @@
                       </component>
                       <component id="1049d" class="javax.swing.JLabel" binding="lb_uncertByRoundness">
                         <constraints>
-                          <grid row="12" column="4" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                          <grid row="12" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
                           <text value="0,00"/>
@@ -778,62 +746,9 @@
                         </constraints>
                         <properties/>
                       </component>
-                      <component id="a1a94" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="10" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="Збіжність ux, %мас."/>
-                        </properties>
-                      </component>
-                      <component id="945dd" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="11" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="&lt;HTML&gt;Сумарна стандартна&lt;br&gt; невизначеність uc(Др), %&lt;/HTML&gt;"/>
-                        </properties>
-                      </component>
-                      <component id="7516" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="12" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="&lt;HTML&gt;Розширена &lt;br&gt;невизначеність  U, %&lt;/html&gt;"/>
-                        </properties>
-                      </component>
-                      <component id="52ce4" class="javax.swing.JLabel" binding="lb_convergence">
-                        <constraints>
-                          <grid row="10" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="0,00"/>
-                        </properties>
-                      </component>
-                      <component id="7105" class="javax.swing.JLabel" binding="lb_cumulStandartUncertainty">
-                        <constraints>
-                          <grid row="11" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="0,00"/>
-                        </properties>
-                      </component>
-                      <component id="7bc35" class="javax.swing.JLabel" binding="lb_extendUncertainty">
-                        <constraints>
-                          <grid row="12" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="0,00"/>
-                        </properties>
-                      </component>
-                      <hspacer id="e0321">
-                        <constraints>
-                          <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                      </hspacer>
                       <component id="a6b7a" class="javax.swing.JButton" binding="btPrintReport">
                         <constraints>
-                          <grid row="13" column="6" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <grid row="12" column="6" row-span="2" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
                           <text value="Надрукувати протокол"/>
@@ -915,7 +830,7 @@
                           <text value=""/>
                         </properties>
                       </component>
-                      <component id="e2d48" class="javax.swing.JLabel" binding="lb_cm1_influenceCouff_UX_CX">
+                      <component id="e2d48" class="javax.swing.JLabel" binding="lb_cm1_influenceCoeff_UX_CX">
                         <constraints>
                           <grid row="11" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -929,54 +844,6 @@
                         </constraints>
                         <properties>
                           <text value="ux*cx"/>
-                        </properties>
-                      </component>
-                      <component id="9a462" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="9" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="ux*cx"/>
-                        </properties>
-                      </component>
-                      <component id="c0b22" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="Коефіцієнт впливу cm"/>
-                        </properties>
-                      </component>
-                      <component id="74e58" class="javax.swing.JLabel" binding="lb_cm_influence_coeff">
-                        <constraints>
-                          <grid row="12" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="0,00"/>
-                        </properties>
-                      </component>
-                      <component id="1d57" class="javax.swing.JLabel" binding="lb_cm_influenceCouff_UX_CX">
-                        <constraints>
-                          <grid row="12" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="0,00"/>
-                        </properties>
-                      </component>
-                      <component id="eb349" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="Заокруглення D, %мас"/>
-                        </properties>
-                      </component>
-                      <component id="fa4c2" class="javax.swing.JLabel" binding="lb_roundndness">
-                        <constraints>
-                          <grid row="13" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="0,00"/>
                         </properties>
                       </component>
                       <component id="9252e" class="javax.swing.JLabel">
@@ -995,6 +862,155 @@
                           <text value="0.00"/>
                         </properties>
                       </component>
+                      <component id="45d6f" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="9" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="ux*cx"/>
+                        </properties>
+                      </component>
+                      <component id="eb349" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="11" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Заокруглення D, %мас"/>
+                        </properties>
+                      </component>
+                      <component id="fa4c2" class="javax.swing.JLabel" binding="lb_roundndness">
+                        <constraints>
+                          <grid row="11" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="0,00"/>
+                        </properties>
+                      </component>
+                      <component id="c0b22" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Коефіцієнт впливу cm"/>
+                        </properties>
+                      </component>
+                      <component id="74e58" class="javax.swing.JLabel" binding="lb_cm_influence_coeff">
+                        <constraints>
+                          <grid row="13" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="0,00"/>
+                        </properties>
+                      </component>
+                      <component id="1d57" class="javax.swing.JLabel" binding="lb_cm_influenceCoeff_UX_CX">
+                        <constraints>
+                          <grid row="13" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="0,00"/>
+                        </properties>
+                      </component>
+                      <component id="22e45" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="&lt;html&gt;Стандартна невизначеність &lt;br&gt;um, г.&lt;/html&gt;"/>
+                        </properties>
+                      </component>
+                      <component id="ea5c6" class="javax.swing.JLabel" binding="lb_stanUncertaintySampMass">
+                        <constraints>
+                          <grid row="12" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="0,00"/>
+                        </properties>
+                      </component>
+                      <component id="27d76" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="10" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Невизн. сталої маси uст.м., г."/>
+                        </properties>
+                      </component>
+                      <component id="4a932" class="javax.swing.JLabel" binding="lb_constMassUncert">
+                        <constraints>
+                          <grid row="10" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="0,00"/>
+                        </properties>
+                      </component>
+                      <component id="a1a94" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="13" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Збіжність ux, %мас."/>
+                        </properties>
+                      </component>
+                      <component id="52ce4" class="javax.swing.JLabel" binding="lb_convergence">
+                        <constraints>
+                          <grid row="13" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="0,00"/>
+                        </properties>
+                      </component>
+                      <component id="f6533" class="javax.swing.JLabel" binding="lb_convergence_UX_CX">
+                        <constraints>
+                          <grid row="13" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="0,00"/>
+                        </properties>
+                      </component>
+                      <component id="945dd" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="10" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="&lt;HTML&gt;Сумарна стандартна&lt;br&gt; невизначеність uc(Др), %&lt;/HTML&gt;"/>
+                        </properties>
+                      </component>
+                      <component id="7516" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="11" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="&lt;HTML&gt;Розширена &lt;br&gt;невизначеність  U, %&lt;/html&gt;"/>
+                        </properties>
+                      </component>
+                      <component id="7105" class="javax.swing.JLabel" binding="lb_totalStandardUncertainty">
+                        <constraints>
+                          <grid row="10" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="0,00"/>
+                        </properties>
+                      </component>
+                      <component id="7bc35" class="javax.swing.JLabel" binding="lb_extendUncertainty">
+                        <constraints>
+                          <grid row="11" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="0,00"/>
+                        </properties>
+                      </component>
+                      <component id="be989" class="javax.swing.JLabel" binding="lb_roundness_UX_CX">
+                        <constraints>
+                          <grid row="12" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="0,00"/>
+                        </properties>
+                      </component>
+                      <hspacer id="4242b">
+                        <constraints>
+                          <grid row="12" column="8" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                      </hspacer>
                     </children>
                   </grid>
                 </children>

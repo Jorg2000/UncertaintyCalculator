@@ -1,8 +1,10 @@
 package NAU.view.swing;
 
 import NAU.controller.IController;
+import NAU.controller.utils.UncertaintyCalculator;
 import NAU.model.POJO.TableResultsContainer;
 import NAU.model.POJO.TableSingleMeasurementsResultContainer;
+import NAU.model.POJO.UncertaintyDataContainer;
 import NAU.view.ViewUtils;
 
 import javax.swing.*;
@@ -61,7 +63,7 @@ public class MainWindow extends JFrame {
     private JTextField tf_protNumber;
     private JLabel lb_crushability01;
     private JLabel lb_crushability02;
-    private JLabel lb_sampleMassMean01;
+    private JLabel lb_sampleMassMean;
     private JLabel lb_reminderMassMedium;
     private JLabel lb_stanUncertaintySampMass;
     private JLabel lb_stanUncertaintyRemMass;
@@ -69,15 +71,17 @@ public class MainWindow extends JFrame {
     private JLabel lb_constMassUncert;
     private JLabel lb_uncertByRoundness;
     private JLabel lb_convergence;
-    private JLabel lb_cumulStandartUncertainty;
+    private JLabel lb_totalStandardUncertainty;
     private JLabel lb_extendUncertainty;
     private JLabel lb_crushabilityMean;
     private JFormattedTextField tf_stanUncertOfMassMeasure;
     private JFormattedTextField tf_maxDiffTwoRes;
-    private JLabel lb_cm1_influenceCouff_UX_CX;
+    private JLabel lb_cm1_influenceCoeff_UX_CX;
     private JLabel lb_cm_influence_coeff;
-    private JLabel lb_cm_influenceCouff_UX_CX;
+    private JLabel lb_cm_influenceCoeff_UX_CX;
     private JLabel lb_roundndness;
+    private JLabel lb_roundness_UX_CX;
+    private JLabel lb_convergence_UX_CX;
 
     private DecimalFormat df;
 
@@ -87,6 +91,10 @@ public class MainWindow extends JFrame {
     private Double[] sampleMassData;
     private Double[] reminderMassData;
     private Double[] crushabilityData;
+
+
+    private UncertaintyCalculator uncertaintyCalculator;
+    private UncertaintyDataContainer uncertaintyDataContainer;
 
 
     public MainWindow(IController c) {
@@ -146,6 +154,9 @@ public class MainWindow extends JFrame {
         tableConfigure(table20_40, tableModel20_40);
         tableConfigure(table40_, tableModel40_);
         tableConfigure(tableSingleMeasurement, tableModelSingleMeasurements);
+
+        uncertaintyDataContainer = new UncertaintyDataContainer();
+        uncertaintyCalculator = new UncertaintyCalculator(uncertaintyDataContainer);
 
 
         ListSelectionModel cellSelection5_10 = table5_10.getSelectionModel();
@@ -237,29 +248,25 @@ public class MainWindow extends JFrame {
         tf_stanUncertOfMassMeasure.getDocument().addDocumentListener(new DocumentListener() {
 
             public void insertUpdate(DocumentEvent e) {
-                writeToLBRemMass();
-                writeInfluenceCM1CoeffUX_CX();
+                readUncertaintyComponents();
+                uncertaintyCalculator.setDataContainer(uncertaintyDataContainer);
+                showUncertaintyResults();
 
             }
 
             public void removeUpdate(DocumentEvent e) {
-                writeToLBRemMass();
-                writeInfluenceCM1CoeffUX_CX();
+                readUncertaintyComponents();
+                uncertaintyCalculator.setDataContainer(uncertaintyDataContainer);
+                showUncertaintyResults();
 
             }
 
             public void changedUpdate(DocumentEvent e) {
-                writeToLBRemMass();
-                writeInfluenceCM1CoeffUX_CX();
+                  readUncertaintyComponents();
+                uncertaintyCalculator.setDataContainer(uncertaintyDataContainer);
+                showUncertaintyResults();
 
             }
-
-            private void writeToLBRemMass() {
-                if (viewUtils.stringIsNumber(tf_stanUncertOfMassMeasure.getText())) {
-                    lb_stanUncertaintyRemMass.setText(tf_stanUncertOfMassMeasure.getText());
-                }
-            }
-
         });
 
 
@@ -283,7 +290,7 @@ public class MainWindow extends JFrame {
             private void showMean() {
                 sampleMassData[0] = viewUtils.getDoubleNumberFromTextField(tf_sampleMass01);
                 double result = controller.mean(Arrays.asList(sampleMassData));
-                lb_sampleMassMean01.setText(df.format(result));
+                lb_sampleMassMean.setText(df.format(result));
             }
 
             private void showCrash() {
@@ -315,7 +322,7 @@ public class MainWindow extends JFrame {
             private void showMean() {
                 sampleMassData[1] = viewUtils.getDoubleNumberFromTextField(tf_sampleMass02);
                 double result = controller.mean(Arrays.asList(sampleMassData));
-                lb_sampleMassMean01.setText(df.format(result));
+                lb_sampleMassMean.setText(df.format(result));
             }
 
             private void showCrash() {
@@ -324,10 +331,7 @@ public class MainWindow extends JFrame {
                 lb_crushability02.setText(dfLocal.format(crushabilityData[1]));
                 double result = controller.mean(Arrays.asList(crushabilityData));
                 lb_crushabilityMean.setText(dfLocal.format(result));
-
             }
-
-
         });
 
         tf_remainderMass01.getDocument().addDocumentListener(new DocumentListener() {
@@ -378,7 +382,6 @@ public class MainWindow extends JFrame {
             public void changedUpdate(DocumentEvent e) {
                 showMean();
                 showCrash();
-
             }
 
             private void showMean() {
@@ -393,20 +396,28 @@ public class MainWindow extends JFrame {
                 lb_crushability02.setText(dfLocal.format(crushabilityData[1]));
                 double result = controller.mean(Arrays.asList(crushabilityData));
                 lb_crushabilityMean.setText(dfLocal.format(result));
-
             }
 
         });
 
-        PropertyChangeListener pcl_lbReminderMassMean = new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent evt) {
-                writeInfluenceCM1Coeff();
-                writeConstMassUncertainty();
-                writeInfluenceCM1CoeffUX_CX();
-            }
-        };
-        lb_reminderMassMedium.addPropertyChangeListener(pcl_lbReminderMassMean);
 
+        lb_reminderMassMedium.addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent evt) {
+                readUncertaintyComponents();
+                uncertaintyCalculator.setDataContainer(uncertaintyDataContainer);
+                showUncertaintyResults();
+            }
+        });
+
+
+        lb_sampleMassMean.addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent evt) {
+                readUncertaintyComponents();
+                uncertaintyCalculator.setDataContainer(uncertaintyDataContainer);
+                showUncertaintyResults();
+
+            }
+        });
 
         setVisible(true);
         pack();
@@ -443,37 +454,44 @@ public class MainWindow extends JFrame {
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
     }
 
-    private void writeInfluenceCM1Coeff() {
-        String data = lb_reminderMassMedium.getText().replace(",", ".");
-        if (viewUtils.stringIsNumber(data)) {
-            double mean = controller.influenceCoeff(Double.parseDouble(data));
-            lb_cm1_influence_coeff.setText(df.format(mean));
+
+    private void readUncertaintyComponents() {
+        String strMeanRemainMass = lb_reminderMassMedium.getText().replace(",", ".");
+        if (strMeanRemainMass != null & viewUtils.stringIsNumber(strMeanRemainMass)) {
+            uncertaintyDataContainer.setMeanRemainMass(Double.parseDouble(strMeanRemainMass));
+        }
+
+        String strSampleMassMean = lb_sampleMassMean.getText().replace(",", ".");
+        if (strSampleMassMean != null & viewUtils.stringIsNumber(strSampleMassMean)) {
+            uncertaintyDataContainer.setMeanSampleMass(Double.parseDouble(strSampleMassMean));
+        }
+
+        String strStandUncertOfMassMeasure = tf_stanUncertOfMassMeasure.getText().replace(",", ".");
+        if (strStandUncertOfMassMeasure != null & viewUtils.stringIsNumber(strStandUncertOfMassMeasure)) {
+            uncertaintyDataContainer.setStanMassWeightingUncertainty(Double.parseDouble(strStandUncertOfMassMeasure));
+        }
+
+        String strMaxDiffTwoResu = tf_maxDiffTwoRes.getText().replace(",", ".");
+        if (strMaxDiffTwoResu != null & viewUtils.stringIsNumber(strMaxDiffTwoResu)) {
+            uncertaintyDataContainer.setMaxDifferenceBetweenResults(Double.parseDouble(strMaxDiffTwoResu));
         }
     }
 
-    private void writeInfluenceCM1CoeffUX_CX() {
-
-        String dataInfluenceCoeff = lb_cm1_influence_coeff.getText().replace(",", ".");
-        String dataStdUncertainty = tf_stanUncertOfMassMeasure.getText().replace(",", ".");
+    private void showUncertaintyResults(){
         DecimalFormat dfLocal = new DecimalFormat("0.0");
-
-        if (viewUtils.stringIsNumber(dataInfluenceCoeff)
-                & viewUtils.stringIsNumber(dataStdUncertainty)) {
-            double res = controller.influenceCoeffUxCx(
-                    Double.parseDouble(dataStdUncertainty),
-                    Double.parseDouble(dataInfluenceCoeff));
-            lb_cm1_influenceCouff_UX_CX.setText(dfLocal.format(res));
-        }
+        lb_stanUncertaintyRemMass.setText(df.format(uncertaintyCalculator.getStandardMassWeightUncertainty()));
+        lb_cm1_influence_coeff.setText(df.format(uncertaintyCalculator.getInfluenceCoefCM1()));
+        lb_cm1_influenceCoeff_UX_CX.setText(dfLocal.format(uncertaintyCalculator.getInfluenceCoefCM1CxUx()));
+        lb_cm_influence_coeff.setText(df.format(uncertaintyCalculator.getInfluenceCoefCM()));
+        lb_cm_influenceCoeff_UX_CX.setText(dfLocal.format(uncertaintyCalculator.getInfluenceCoefCMCxUx()));
+        lb_roundndness.setText(dfLocal.format(uncertaintyCalculator.getRoundness()));
+        lb_stanUncertaintySampMass.setText(df.format(uncertaintyCalculator.getStandardMassWeightUncertainty()));
+        lb_constMassUncert.setText(df.format(uncertaintyCalculator.getConstMassUncertainty()));
+        lb_uncertByRoundness.setText(df.format(uncertaintyCalculator.getRoundnessUncertainty()));
+        lb_roundness_UX_CX.setText(dfLocal.format(uncertaintyCalculator.getRoundnessUncertaintyCxUx()));
+        lb_convergence.setText(df.format(uncertaintyCalculator.getConvergence()));
+        lb_convergence_UX_CX.setText(dfLocal.format(uncertaintyCalculator.getConvergenceCxUx()));
+        lb_totalStandardUncertainty.setText(df.format(uncertaintyCalculator.getTotalStandUncertainty()));
+        lb_extendUncertainty.setText(dfLocal.format(uncertaintyCalculator.getExtendedUncertainty()));
     }
-
-
-    private void writeConstMassUncertainty() {
-        String data = lb_reminderMassMedium.getText().replace(",", ".");
-        if (data != null & viewUtils.stringIsNumber(data)) {
-            double res = controller.constMassUncertainty(Double.parseDouble(data));
-            lb_constMassUncert.setText(df.format(res));
-        }
-    }
-
-
 }

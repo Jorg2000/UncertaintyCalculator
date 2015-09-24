@@ -1,6 +1,7 @@
 package NAU.view.swing;
 
 import NAU.controller.IController;
+import NAU.controller.utils.ReportCreator;
 import NAU.controller.utils.UncertaintyCalculator;
 import NAU.model.POJO.TableResultsContainer;
 import NAU.model.POJO.TableSingleMeasurementsResultContainer;
@@ -14,6 +15,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.math.RoundingMode;
@@ -157,7 +160,6 @@ public class MainWindow extends JFrame {
 
         uncertaintyDataContainer = new UncertaintyDataContainer();
         uncertaintyCalculator = new UncertaintyCalculator(uncertaintyDataContainer);
-
 
         ListSelectionModel cellSelection5_10 = table5_10.getSelectionModel();
         cellSelection5_10.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -421,6 +423,16 @@ public class MainWindow extends JFrame {
 
         setVisible(true);
         pack();
+
+        btPrintReport.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                        System.out.println("Hello :)");
+
+                new ReportCreator().createReport();
+
+            }
+        });
     }
 
     private void modelConfigure(CellEditionTableModel model, String[] columnNames) {
@@ -494,4 +506,5 @@ public class MainWindow extends JFrame {
         lb_totalStandardUncertainty.setText(df.format(uncertaintyCalculator.getTotalStandUncertainty()));
         lb_extendUncertainty.setText(dfLocal.format(uncertaintyCalculator.getExtendedUncertainty()));
     }
+    StringBuffer str = new StringBuffer();
 }

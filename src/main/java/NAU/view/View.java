@@ -16,7 +16,7 @@ public class View implements IView {
 
     public void startView() {
 
-        try {
+        /*try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -26,7 +26,7 @@ public class View implements IView {
             e.printStackTrace();
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
-        }
+        }*/
 
         mainWindow = new MainWindow(controller);
     }

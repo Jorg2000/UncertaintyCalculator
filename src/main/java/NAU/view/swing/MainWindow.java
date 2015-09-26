@@ -3,6 +3,7 @@ package NAU.view.swing;
 import NAU.controller.IController;
 import NAU.controller.utils.ReportCreator;
 import NAU.controller.utils.UncertaintyCalculator;
+import NAU.model.POJO.ProtocolDataContainer;
 import NAU.model.POJO.TableResultsContainer;
 import NAU.model.POJO.TableSingleMeasurementsResultContainer;
 import NAU.model.POJO.UncertaintyDataContainer;
@@ -23,6 +24,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.LinkedList;
 
 
@@ -98,6 +100,7 @@ public class MainWindow extends JFrame {
 
     private UncertaintyCalculator uncertaintyCalculator;
     private UncertaintyDataContainer uncertaintyDataContainer;
+    private ProtocolDataContainer protocolDataContainer;
 
 
     public MainWindow(IController c) {
@@ -108,7 +111,7 @@ public class MainWindow extends JFrame {
         setContentPane(panelRoot);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        String[] columnNames = {"№", "W1, %", "W2, %", "R, %"};
+        String[] columnNames = {"№", "<html>W<sub>1</sub>,%</html>", "<html>W<sub>2</sub>,%</html>", "R,%"};
         String[] columnNamesSingle = {"<html><center>№<br>п/п</center></html>",
                 "<html><center>5-10<br>W</center></html>", "<html><center>10-20<br>W</center></html>",
                 "<html><center>20-40<br>W</center></html>", "<html><center> >40<br>W</center></html>"};
@@ -160,6 +163,7 @@ public class MainWindow extends JFrame {
 
         uncertaintyDataContainer = new UncertaintyDataContainer();
         uncertaintyCalculator = new UncertaintyCalculator(uncertaintyDataContainer);
+        protocolDataContainer = new ProtocolDataContainer();
 
         ListSelectionModel cellSelection5_10 = table5_10.getSelectionModel();
         cellSelection5_10.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -172,6 +176,7 @@ public class MainWindow extends JFrame {
                 rser5_10.setText(df.format(results5_10.getAmpMean()));
                 sr5_10.setText(df.format(results5_10.getStDev()));
                 r5_10.setText(df.format(results5_10.getRepLim()));
+                protocolDataContainer.setResults5_10(results5_10);
             }
         });
 
@@ -187,6 +192,7 @@ public class MainWindow extends JFrame {
                 rser10_20.setText(df.format(results10_20.getAmpMean()));
                 sr10_20.setText(df.format(results10_20.getStDev()));
                 r10_20.setText(df.format(results10_20.getRepLim()));
+                protocolDataContainer.setResults10_20(results10_20);
             }
         });
 
@@ -202,6 +208,7 @@ public class MainWindow extends JFrame {
                 rser20_40.setText(df.format(results20_40.getAmpMean()));
                 sr20_40.setText(df.format(results20_40.getStDev()));
                 r20_40.setText(df.format(results20_40.getRepLim()));
+                protocolDataContainer.setResults20_40(results20_40);
             }
         });
 
@@ -216,6 +223,7 @@ public class MainWindow extends JFrame {
                 rser40_.setText(df.format(results40_.getAmpMean()));
                 sr40_.setText(df.format(results40_.getStDev()));
                 r40_.setText(df.format(results40_.getRepLim()));
+                protocolDataContainer.setResults40_(results40_);
             }
         });
 
@@ -229,21 +237,27 @@ public class MainWindow extends JFrame {
                 TableSingleMeasurementsResultContainer results5_10 = controller.getResultForSingleMeasuredData(data5_10);
                 lableSingleMeasSr5_10.setText(df.format(results5_10.getStDev()));
                 lableSingleMeasR5_10.setText(df.format(results5_10.getRepLim()));
+
+                protocolDataContainer.setSingleResults5_10(results5_10);
+
                 /*Result calculation for crushability 10_20mm */
                 LinkedList<Double> data10_20 = viewUtils.getDataFromTable(tableModelSingleMeasurements, 2);
                 TableSingleMeasurementsResultContainer results10_20 = controller.getResultForSingleMeasuredData(data10_20);
                 lableSingleMeasSr10_20.setText(df.format(results10_20.getStDev()));
                 lableSingleMeasR10_20.setText(df.format(results10_20.getRepLim()));
+                protocolDataContainer.setSingleResults10_20(results10_20);
                 /*Result calculation for crushability 20_40mm */
                 LinkedList<Double> data20_40 = viewUtils.getDataFromTable(tableModelSingleMeasurements, 3);
                 TableSingleMeasurementsResultContainer results20_40 = controller.getResultForSingleMeasuredData(data20_40);
                 lableSingleMeasSr20_40.setText(df.format(results20_40.getStDev()));
                 lableSingleMeasR20_40.setText(df.format(results20_40.getRepLim()));
+                protocolDataContainer.setSingleResults20_40(results20_40);
                 /*Result calculation for crushability >40mm */
                 LinkedList<Double> data40_ = viewUtils.getDataFromTable(tableModelSingleMeasurements, 4);
                 TableSingleMeasurementsResultContainer results40_ = controller.getResultForSingleMeasuredData(data40_);
                 lableSingleMeasSr40_.setText(df.format(results40_.getStDev()));
                 lableSingleMeasR40_.setText(df.format(results40_.getRepLim()));
+                protocolDataContainer.setSingleResults40_(results40_);
             }
         });
 
@@ -426,11 +440,12 @@ public class MainWindow extends JFrame {
 
         btPrintReport.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
-                        System.out.println("Hello :)");
-
-                new ReportCreator().createReport();
-
+                System.out.println("Hello :)");
+                protocolDataContainer.setProtocolNumber(tf_protNumber.getText());
+                protocolDataContainer.setProtocolIssuedDate(Calendar.getInstance());
+                protocolDataContainer.setSampleNumber(tf_sampleNumber.getText());
+                protocolDataContainer.setUncertaintyCalculator(uncertaintyCalculator);
+                new ReportCreator().createReport(protocolDataContainer);
             }
         });
     }

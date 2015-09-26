@@ -12,6 +12,10 @@ public class TableResultsContainer {
         this.repLim = repLim;
     }
 
+    public TableResultsContainer() {
+
+    }
+
     public double getAmpMean() {
         return ampMean;
     }

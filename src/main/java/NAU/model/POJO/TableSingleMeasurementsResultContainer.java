@@ -10,6 +10,10 @@ public class TableSingleMeasurementsResultContainer {
         this.repLim = repLim;
     }
 
+    public TableSingleMeasurementsResultContainer() {
+
+    }
+
     public double getStDev() {
         return stDev;
     }

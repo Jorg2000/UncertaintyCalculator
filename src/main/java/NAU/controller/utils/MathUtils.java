@@ -25,7 +25,7 @@ public class MathUtils {
             sum = sum.add(new BigDecimal(a));
         }
 
-        return sum.divide(new BigDecimal(arr.size(), mathContext)).doubleValue();
+        return sum.divide(new BigDecimal(arr.size()), mathContext).doubleValue();
     }
 
     public double stanDevByConst(double mean) {

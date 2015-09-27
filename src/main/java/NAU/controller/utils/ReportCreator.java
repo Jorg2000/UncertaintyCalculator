@@ -1,13 +1,15 @@
 package NAU.controller.utils;
 
+import NAU.model.POJO.MeasurementDataContainer;
 import NAU.model.POJO.ProtocolDataContainer;
 import NAU.model.POJO.UncertaintyDataContainer;
 import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by SUSLOV on 24.09.2015.
@@ -19,6 +21,39 @@ public class ReportCreator {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         DecimalFormat df = new DecimalFormat("0.00");
         Map parameters = new HashMap<String,Object>();
+
+
+
+        ArrayList<MeasurementDataContainer> data5_10 = new ArrayList<MeasurementDataContainer>();
+        ArrayList<MeasurementDataContainer> data10_20 = new ArrayList<MeasurementDataContainer>();
+        ArrayList<MeasurementDataContainer> data20_40 = new ArrayList<MeasurementDataContainer>();
+        ArrayList<MeasurementDataContainer> data40_ = new ArrayList<MeasurementDataContainer>();
+
+
+        data5_10.add(new MeasurementDataContainer("1", "1.1", "1.1", "1.1"));
+        data5_10.add(new MeasurementDataContainer("2", "2.1", "2.1", "2.1"));
+        data5_10.add(new MeasurementDataContainer("3", "3.1", "2.2", "0.1"));
+
+
+        data10_20.add(new MeasurementDataContainer("1", "1.1", "1.1", "1.1"));
+        data10_20.add(new MeasurementDataContainer("2", "2.1", "2.1", "2.1"));
+        data10_20.add(new MeasurementDataContainer("3", "3.1", "2.2", "0.1"));
+
+
+        data20_40.add(new MeasurementDataContainer("1", "1.1", "1.1", "1.1"));
+        data20_40.add(new MeasurementDataContainer("2", "2.1", "2.1", "2.1"));
+        data20_40.add(new MeasurementDataContainer("3", "3.1", "2.2", "0.1"));
+
+
+        data40_.add(new MeasurementDataContainer("1", "1.1", "1.1", "1.1"));
+        data40_.add(new MeasurementDataContainer("2", "2.1", "2.1", "2.1"));
+        data40_.add(new MeasurementDataContainer("3", "3.1", "2.2", "0.1"));
+
+
+        parameters.put("data5_10", new JRBeanCollectionDataSource(data5_10));
+        parameters.put("data10_20", new JRBeanCollectionDataSource(data10_20));
+        parameters.put("data20_40", new JRBeanCollectionDataSource(data20_40));
+        parameters.put("data40_", new JRBeanCollectionDataSource(data40_));
 
 
         parameters.put("protNumber", pdc.getProtocolNumber());
@@ -40,12 +75,16 @@ public class ReportCreator {
         parameters.put("sr40_", df.format(pdc.getResults40_().getStDev()));
         parameters.put("r40_", df.format(pdc.getResults40_().getRepLim()));
 
+
         try {
             JasperReport jasperReport = JasperCompileManager
                     .compileReport("resources\\reports\\Uncertainty.jrxml");
 
+
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,
                     parameters, new JREmptyDataSource());
+
+            JasperViewer.viewReport(jasperPrint);
 
             JasperExportManager.exportReportToPdfFile(jasperPrint, "hello_report.pdf");
         } catch (JRException e) {

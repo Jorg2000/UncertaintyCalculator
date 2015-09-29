@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Uncertainty" pageWidth="595" pageHeight="842" columnWidth="539" leftMargin="28" rightMargin="28" topMargin="28" bottomMargin="28" uuid="08fe20b9-9cd5-4bad-9b99-2902bc95567d">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="120"/>
+	<property name="ireport.y" value="250"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -442,6 +442,10 @@
 		<field name="w20_40" class="java.lang.String"/>
 		<field name="w40_" class="java.lang.String"/>
 	</subDataset>
+	<subDataset name="graphTable1_1" uuid="d5228ca1-cfde-41b8-8edf-5012fa69e36e">
+		<field name="r" class="java.lang.Double"/>
+		<field name="mm" class="java.lang.String"/>
+	</subDataset>
 	<parameter name="protNumber" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -474,6 +478,7 @@
 	<parameter name="r10_20_Single" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="r20_40_Single" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="r40_Single" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="graphData1_1" class="net.sf.jasperreports.engine.JRDataSource" isForPrompting="false"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -944,7 +949,7 @@
 				<textFieldExpression><![CDATA["<b>S<sub>r</sub> " + $P{sr40_} + "</b>"]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="33">
+		<band height="30">
 			<staticText>
 				<reportElement x="0" y="0" width="260" height="30" uuid="7c23cdaa-c8ba-4bb7-adfd-2084161b1168"/>
 				<textElement>
@@ -953,7 +958,7 @@
 				<text><![CDATA[Таблиця 1.2 – Результати оцінювання повторюваності за наявності попередніх даних]]></text>
 			</staticText>
 		</band>
-		<band height="87">
+		<band height="365">
 			<componentElement>
 				<reportElement key="table 19" style="table 19" x="0" y="0" width="260" height="80" uuid="0d104949-e327-48bc-bc76-53ae8582d133"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
@@ -1156,6 +1161,37 @@
 					</jr:column>
 				</jr:table>
 			</componentElement>
+			<lineChart>
+				<chart isShowLegend="true">
+					<reportElement x="291" y="0" width="248" height="171" uuid="0d0701e5-fc01-4bf0-a6b5-e25d98d2f88a"/>
+					<chartTitle>
+						<font fontName="Arial" pdfFontName="arial.ttf" pdfEncoding="Cp1251"/>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="graphTable1_1" uuid="304f7466-c779-4a08-ba4b-924fca319d3b">
+							<dataSourceExpression><![CDATA[$P{graphData1_1}]]></dataSourceExpression>
+						</datasetRun>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Йоу"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{mm}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{r}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot>
+					<plot/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
 		</band>
 	</detail>
 	<pageFooter>

@@ -1,5 +1,6 @@
 package NAU.controller.utils;
 
+import NAU.model.POJO.Graph.GraphDataContainer;
 import NAU.model.POJO.MeasurementDataContainer;
 import NAU.model.POJO.ProtocolDataContainer;
 import NAU.model.POJO.SingleMeasurementDataContainer;
@@ -27,6 +28,12 @@ public class ReportCreator {
         ArrayList<MeasurementDataContainer> data10_20 = new ArrayList<MeasurementDataContainer>();
         ArrayList<MeasurementDataContainer> data20_40 = new ArrayList<MeasurementDataContainer>();
         ArrayList<MeasurementDataContainer> data40_ = new ArrayList<MeasurementDataContainer>();
+        ArrayList<GraphDataContainer> graphData = new ArrayList<GraphDataContainer>();
+        graphData.add(new GraphDataContainer(0.12,"5 - 10"));
+        graphData.add(new GraphDataContainer(0.18,"10 - 20"));
+        graphData.add(new GraphDataContainer(0.25,"20 - 40"));
+        graphData.add(new GraphDataContainer(0.16," > 40"));
+
 
         ArrayList<SingleMeasurementDataContainer> dataSingle = new ArrayList<SingleMeasurementDataContainer>();
         dataSingle.add(new SingleMeasurementDataContainer("1", "1.11", "1.12", "1.13", "1.14"));
@@ -52,13 +59,13 @@ public class ReportCreator {
         data40_.add(new MeasurementDataContainer("2", "2.1", "2.1", "2.1"));
         data40_.add(new MeasurementDataContainer("3", "3.1", "2.2", "0.1"));
 
-
         parameters.put("data5_10", new JRBeanCollectionDataSource(data5_10));
         parameters.put("data10_20", new JRBeanCollectionDataSource(data10_20));
         parameters.put("data20_40", new JRBeanCollectionDataSource(data20_40));
         parameters.put("data40_", new JRBeanCollectionDataSource(data40_));
 
         parameters.put("dataSingle", new JRBeanCollectionDataSource(dataSingle));
+        parameters.put("graphData1_1", new JRBeanCollectionDataSource(graphData));
 
         parameters.put("protNumber", pdc.getProtocolNumber());
         parameters.put("protDate", dateFormat.format(pdc.getProtocolIssuedDate().getTime()));

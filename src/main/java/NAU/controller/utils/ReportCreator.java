@@ -28,36 +28,45 @@ public class ReportCreator {
         ArrayList<MeasurementDataContainer> data10_20 = new ArrayList<MeasurementDataContainer>();
         ArrayList<MeasurementDataContainer> data20_40 = new ArrayList<MeasurementDataContainer>();
         ArrayList<MeasurementDataContainer> data40_ = new ArrayList<MeasurementDataContainer>();
-        ArrayList<GraphDataContainer> graphData = new ArrayList<GraphDataContainer>();
-        graphData.add(new GraphDataContainer(0.12,"5 - 10"));
-        graphData.add(new GraphDataContainer(0.18,"10 - 20"));
-        graphData.add(new GraphDataContainer(0.25,"20 - 40"));
-        graphData.add(new GraphDataContainer(0.16," > 40"));
+        ArrayList<GraphDataContainer> graphData1_1 = new ArrayList<GraphDataContainer>();
+        ArrayList<GraphDataContainer> graphData1_2 = new ArrayList<GraphDataContainer>();
+        graphData1_1.add(new GraphDataContainer(0.12, "5 - 10"));
+        graphData1_1.add(new GraphDataContainer(0.18, "10 - 20"));
+        graphData1_1.add(new GraphDataContainer(0.25, "20 - 40"));
+        graphData1_1.add(new GraphDataContainer(0.16, " > 40"));
 
+        graphData1_2.add(new GraphDataContainer(1.96, "5 - 10"));
+        graphData1_2.add(new GraphDataContainer(3.92, "10 - 20"));
+        graphData1_2.add(new GraphDataContainer(1.96, "20 - 40"));
+        graphData1_2.add(new GraphDataContainer(1.96, " > 40"));
 
         ArrayList<SingleMeasurementDataContainer> dataSingle = new ArrayList<SingleMeasurementDataContainer>();
-        dataSingle.add(new SingleMeasurementDataContainer("1", "1.11", "1.12", "1.13", "1.14"));
-        dataSingle.add(new SingleMeasurementDataContainer("2", "2.11", "2.12", "2.13", "2.14"));
-        dataSingle.add(new SingleMeasurementDataContainer("3", "3.11", "3.12", "3.13", "3.14"));
-        dataSingle.add(new SingleMeasurementDataContainer("4", "4.11", "4.12", "4.13", "4.14"));
+        for (int i = 0; i < 20; i++) {
+            String stubData = Integer.toString(i);
+            dataSingle.add(new SingleMeasurementDataContainer(
+                    stubData,
+                    stubData + ".00",
+                    stubData + ".00",
+                    stubData + ".00",
+                    stubData + ".00"));
+            data5_10.add(new MeasurementDataContainer(stubData,
+                    stubData + ".00",
+                    stubData + ".00",
+                    stubData + ".00"));
+            data10_20.add(new MeasurementDataContainer(stubData,
+                    stubData + ".00",
+                    stubData + ".00",
+                    stubData + ".00"));
+            data20_40.add(new MeasurementDataContainer(stubData,
+                    stubData + ".00",
+                    stubData + ".00",
+                    stubData + ".00"));
+            data40_.add(new MeasurementDataContainer(stubData,
+                    stubData + ".00",
+                    stubData + ".00",
+                    stubData + ".00"));
+        }
 
-
-        data5_10.add(new MeasurementDataContainer("1", "1.1", "1.1", "1.1"));
-        data5_10.add(new MeasurementDataContainer("2", "2.1", "2.1", "2.1"));
-        data5_10.add(new MeasurementDataContainer("3", "3.1", "2.2", "0.1"));
-
-        data10_20.add(new MeasurementDataContainer("1", "1.1", "1.1", "1.1"));
-        data10_20.add(new MeasurementDataContainer("2", "2.1", "2.1", "2.1"));
-        data10_20.add(new MeasurementDataContainer("3", "3.1", "2.2", "0.1"));
-
-        data20_40.add(new MeasurementDataContainer("1", "1.1", "1.1", "1.1"));
-        data20_40.add(new MeasurementDataContainer("2", "2.1", "2.1", "2.1"));
-        data20_40.add(new MeasurementDataContainer("3", "3.1", "2.2", "0.1"));
-
-
-        data40_.add(new MeasurementDataContainer("1", "1.1", "1.1", "1.1"));
-        data40_.add(new MeasurementDataContainer("2", "2.1", "2.1", "2.1"));
-        data40_.add(new MeasurementDataContainer("3", "3.1", "2.2", "0.1"));
 
         parameters.put("data5_10", new JRBeanCollectionDataSource(data5_10));
         parameters.put("data10_20", new JRBeanCollectionDataSource(data10_20));
@@ -65,7 +74,8 @@ public class ReportCreator {
         parameters.put("data40_", new JRBeanCollectionDataSource(data40_));
 
         parameters.put("dataSingle", new JRBeanCollectionDataSource(dataSingle));
-        parameters.put("graphData1_1", new JRBeanCollectionDataSource(graphData));
+        parameters.put("graphData1_1", new JRBeanCollectionDataSource(graphData1_1));
+        parameters.put("graphData1_2", new JRBeanCollectionDataSource(graphData1_2));
 
         parameters.put("protNumber", pdc.getProtocolNumber());
         parameters.put("protDate", dateFormat.format(pdc.getProtocolIssuedDate().getTime()));
@@ -106,7 +116,7 @@ public class ReportCreator {
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,
                     parameters, new JREmptyDataSource());
 
-            JasperViewer.viewReport(jasperPrint);
+            JasperViewer.viewReport(jasperPrint,false);
 
             JasperExportManager.exportReportToPdfFile(jasperPrint, "hello_report.pdf");
         } catch (JRException e) {

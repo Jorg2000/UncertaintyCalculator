@@ -3,10 +3,7 @@ package NAU.view.swing;
 import NAU.controller.IController;
 import NAU.controller.utils.ReportCreator;
 import NAU.controller.utils.UncertaintyCalculator;
-import NAU.model.POJO.ProtocolDataContainer;
-import NAU.model.POJO.TableResultsContainer;
-import NAU.model.POJO.TableSingleMeasurementsResultContainer;
-import NAU.model.POJO.UncertaintyDataContainer;
+import NAU.model.POJO.*;
 import NAU.view.ViewUtils;
 
 import javax.swing.*;
@@ -102,6 +99,8 @@ public class MainWindow extends JFrame {
     private UncertaintyDataContainer uncertaintyDataContainer;
     private ProtocolDataContainer protocolDataContainer;
 
+    private SavedDataContainer savingData;
+
 
     public MainWindow(IController c) {
         super("Оцінювання невизначеності для методики");
@@ -110,6 +109,46 @@ public class MainWindow extends JFrame {
 
         setContentPane(panelRoot);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JMenuBar menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+        JMenu file = new JMenu("Файл");
+        menuBar.add(file);
+        JMenuItem loadData = new JMenuItem("Відкрити дані");
+        file.add(loadData);
+        JMenuItem saveData = new JMenuItem("Зберегти дані");
+        file.add(saveData);
+        file.addSeparator();
+        JMenuItem exit = new JMenuItem("Вихід");
+        file.add(exit);
+        JMenu about = new JMenu("Про програму");
+        menuBar.add(about);
+
+        exit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
+        saveData.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser("./");
+                fileChooser.showOpenDialog(null);
+            }
+        });
+        loadData.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser("./");
+                fileChooser.showOpenDialog(null);
+            }
+        });
+
+
+
+
+
+
+
 
         String[] columnNames = {"№", "<html>W<sub>1</sub>,%</html>", "<html>W<sub>2</sub>,%</html>", "R,%"};
         String[] columnNamesSingle = {"<html><center>№<br>п/п</center></html>",
@@ -164,6 +203,8 @@ public class MainWindow extends JFrame {
         uncertaintyDataContainer = new UncertaintyDataContainer();
         uncertaintyCalculator = new UncertaintyCalculator(uncertaintyDataContainer);
         protocolDataContainer = new ProtocolDataContainer();
+
+        savingData = new SavedDataContainer();
 
         ListSelectionModel cellSelection5_10 = table5_10.getSelectionModel();
         cellSelection5_10.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -450,6 +491,8 @@ public class MainWindow extends JFrame {
         });
     }
 
+
+
     private void modelConfigure(CellEditionTableModel model, String[] columnNames) {
         model.setColumnIdentifiers(columnNames);
         for (int i = 0; i < 20; i++) {
@@ -521,5 +564,16 @@ public class MainWindow extends JFrame {
         lb_totalStandardUncertainty.setText(df.format(uncertaintyCalculator.getTotalStandUncertainty()));
         lb_extendUncertainty.setText(dfLocal.format(uncertaintyCalculator.getExtendedUncertainty()));
     }
-    StringBuffer str = new StringBuffer();
+
+    private void fillSavingData() {
+        savingData.setSampleNumber(tf_sampleNumber.getText());
+        savingData.setSampleNumber(tf_protNumber.getText());
+        savingData.setStanMassWeightingUncertainty(viewUtils.getDoubleNumberFromTextField(tf_stanUncertOfMassMeasure));
+        savingData.setSampleMass01(viewUtils.getDoubleNumberFromTextField(tf_sampleMass01));
+        savingData.setSampleMass02(viewUtils.getDoubleNumberFromTextField(tf_sampleMass02));
+        savingData.setRemainderMass01(viewUtils.getDoubleNumberFromTextField(tf_remainderMass01));
+        savingData.setRemainderMass02(viewUtils.getDoubleNumberFromTextField(tf_remainderMass02));
+    }
+
+
 }
